@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Date
+from sqlalchemy import Column, String, Date,DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from .database import BaseSQL
 
@@ -10,6 +10,6 @@ class Student(BaseSQL):
     first_name = Column(String)
     family_name = Column(String)
     birth_date = Column(Date())
-    created_at = Column(Date())
-    updated_at = Column(Date())
+    created_at = Column(DateTime())
+    updated_at = Column(DateTime())
     

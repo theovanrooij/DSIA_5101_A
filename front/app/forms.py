@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import SubmitField,StringField,DateField
+from wtforms import StringField,DateField
 from wtforms.validators import DataRequired
 
 class studentForm(Form):

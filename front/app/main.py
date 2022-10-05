@@ -25,10 +25,6 @@ def addStudent():
 
 @app.route('/add-student-api', methods= ['GET'])
 def addStudentApi():
-    string  =  request.args.get('first_name') +request.args.get('family_name')  + request.args.get('birth_date')
-
-    # return request.args
-
     response  = requests.post(app.config['API_URL']+"/students",json=request.args)
     return redirect("/students")
 
@@ -36,6 +32,20 @@ def addStudentApi():
 def deleteStudentApi(studentID):
 
     response  = requests.delete(app.config['API_URL']+"/students/"+studentID)
+    return redirect("/students")
+
+@app.route('/edit-student/<studentID>', methods= ['GET'])
+def updateStudent(studentID):
+
+    response  = requests.get(app.config['API_URL']+"/students",json={"id":studentID})
+    student = response.json()[0]
+    # return student
+    form = studentForm(obj=student)
+    return render_template("edit-student.html",form=form,student=student)
+
+@app.route('/edit-student-api/<studentID>', methods= ['GET'])
+def editStudentApi(studentID):
+    response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=request.args)
     return redirect("/students")
 
 @app.errorhandler(404)
