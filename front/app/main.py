@@ -85,6 +85,10 @@ def editTeacherApi(teacherID):
     response  = requests.put(app.config['API_URL']+"/teachers/"+teacherID,json=request.args)
     return redirect("/teachers")
 
+@app.route('/unites')
+def unites():
+    response  = requests.get(app.config['API_URL']+"/unites")
+    return render_template("unites.html")
 
 @app.errorhandler(404)
 def page_not_found(e):
