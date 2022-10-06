@@ -1,7 +1,7 @@
 
 from flask import Flask,render_template,request,redirect
 import requests
-from forms import studentForm
+from forms import studentForm, teacherForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret key'
@@ -47,6 +47,44 @@ def updateStudent(studentID):
 def editStudentApi(studentID):
     response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=request.args)
     return redirect("/students")
+
+
+@app.route('/teachers')
+def teachers():
+    response  = requests.get(app.config['API_URL']+"/teachers")
+    # return response.content
+
+    return render_template("teachers.html",teachers=response.json())
+
+@app.route('/add-teacher')
+def addTeacher():
+    form = teacherForm()
+    return render_template("add-teacher.html",form=form)
+
+@app.route('/add-teacher-api', methods= ['GET'])
+def addTeacherApi():
+    response  = requests.post(app.config['API_URL']+"/teachers",json=request.args)
+    return redirect("/teachers")
+
+@app.route('/delete-teacher/<teacherID>', methods= ['GET'])
+def deleteTeacherApi(studentID):
+
+    response  = requests.delete(app.config['API_URL']+"/teachers/"+studentID)
+    return redirect("/teachers")
+
+@app.route('/edit-teacher/<teacherID>', methods= ['GET'])
+def updateTeacher(teacherID):
+
+    response  = requests.get(app.config['API_URL']+"/teachers",json={"id":teacherID})
+    teacher = response.json()[0]
+    form = teacherForm(obj=teacher)
+    return render_template("edit-teacher.html",form=form,teacher=teacher)
+
+@app.route('/edit-teacher-api/<teacherID>', methods= ['GET'])
+def editTeacherApi(teacherID):
+    response  = requests.put(app.config['API_URL']+"/teachers/"+teacherID,json=request.args)
+    return redirect("/teachers")
+
 
 @app.errorhandler(404)
 def page_not_found(e):

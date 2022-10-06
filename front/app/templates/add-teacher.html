@@ -1,17 +1,17 @@
 {% extends "base.html" %} <!--reprend le contenu de la template base.html-->
-{% block title %}Modifier un élève{% endblock %} <!--remplace le contenu du bloc title de base-->
+{% block title %}Ajout d'un professeur{% endblock %} <!--remplace le contenu du bloc title de base-->
 
 {% block content %}
 
 
-<form method="GET" action="/edit-student-api/{{student['id']}}" class="w-full max-w-sm">
+<form method="GET" action="/add-student-api" class="w-full max-w-sm">
     {% for field in form %}
 
     <div class="md:flex md:items-center mb-8">
         <div class="md:w-1/3">
         {{ field.label(class_="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4") }} 
         </div>
-        <div class="md:w-2/3">{{ field(value_=student[field.id],class_="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500") }}</div>
+        <div class="md:w-2/3">{{ field(class_="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500") }}</div>
     </div>
     
 
