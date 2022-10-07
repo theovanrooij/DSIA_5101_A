@@ -30,8 +30,6 @@ def create_student(db: Session, student: schemas.Students) -> models.Student:
     return db_student
 
 
-
-
 def update_student(student_id: str, db: Session, student: schemas.Students) -> models.Student:
     db_student = get_student_by_id(student_id=student_id, db=db)
     for var, value in vars(student).items():

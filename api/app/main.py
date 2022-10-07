@@ -11,6 +11,7 @@ app = FastAPI(
 app.include_router(routers.HealthRouter)
 app.include_router(routers.StudentRouter)
 app.include_router(routers.TeacherRouter)
+app.include_router(routers.SubjectRouter)
 
 @app.on_event("startup")
 async def startup_event():
@@ -27,6 +28,10 @@ def addStudent():
 @app.get("/add-teacher")
 def addTeacher():
     return {"Teacher": "World API"}
+
+@app.get("/add-subject")
+def addSubject():
+    return {"Subject": "World API"}
 
 @app.get("/date")
 def read_root():
