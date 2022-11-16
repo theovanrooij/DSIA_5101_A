@@ -39,7 +39,6 @@ def updateStudent(studentID):
 
     response  = requests.get(app.config['API_URL']+"/students",json={"id":studentID})
     student = response.json()[0]
-    # return student
     form = studentForm(obj=student)
     return render_template("edit-student.html",form=form,student=student)
 
@@ -51,6 +50,8 @@ def editStudentApi(studentID):
 @app.errorhandler(404)
 def page_not_found(e):
     return redirect("/")
+
+# TODO : Détail d'un élève
 
 if __name__ == '__main__':
     

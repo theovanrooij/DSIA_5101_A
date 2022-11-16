@@ -2,11 +2,17 @@
 {% block title %}Liste des élèves{% endblock %} <!--remplace le contenu du bloc title de base-->
 
 {% block content %}
-<a href="/add-student" class="bg-green-500 p-2 text-white hover:shadow-lg text-xs font-thin">Ajouter un élève</a>
-<br>
+
+<!-- TODO : Filtre sur nom, prenom, et unités -->
+
+<!-- Pin to top right corner -->
+<div class="relative h-10 w-100 flex justify-end right-2">
+    <a href="/add-student" class="bg-green-500 p-2 text-white hover:shadow-lg text-xs font-thin">Ajouter un élève</a>
+</div>
 
 <!-- component -->
 <div class="table w-full p-2">
+    
     <table class="w-full border">
         <thead>
             <tr class="bg-gray-50 border-b">
