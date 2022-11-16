@@ -1,7 +1,7 @@
 
 from flask import Flask,render_template,request,redirect
 import requests
-from forms import studentForm
+from forms import studentForm, teacherForm, subjectForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret key'
@@ -10,6 +10,9 @@ app.config['API_URL'] = "http://api:5000"
 @app.route('/')
 def root():
     return render_template("accueil.html",text=requests.get(app.config['API_URL']).text)
+
+
+## Students 
 
 @app.route('/students')
 def students():
@@ -46,6 +49,81 @@ def updateStudent(studentID):
 def editStudentApi(studentID):
     response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=request.args)
     return redirect("/students")
+
+
+## Teachers 
+
+@app.route('/teachers')
+def teachers():
+    response  = requests.get(app.config['API_URL']+"/teachers")
+    # return response.content
+
+    return render_template("teachers.html",teachers=response.json())
+
+@app.route('/add-teacher')
+def addTeacher():
+    form = teacherForm()
+    return render_template("add-teacher.html",form=form)
+
+@app.route('/add-teacher-api', methods= ['GET'])
+def addTeacherApi():
+    response  = requests.post(app.config['API_URL']+"/teachers",json=request.args)
+    return redirect("/teachers")
+
+@app.route('/delete-teacher/<teacherID>', methods= ['GET'])
+def deleteTeacherApi(teacherID):
+
+    response  = requests.delete(app.config['API_URL']+"/teachers/"+teacherID)
+    return redirect("/teachers")
+
+@app.route('/edit-teacher/<teacherID>', methods= ['GET'])
+def updateTeacher(teacherID):
+
+    response  = requests.get(app.config['API_URL']+"/teachers",json={"id":teacherID})
+    teacher = response.json()[0]
+    form = teacherForm(obj=teacher)
+    return render_template("edit-teacher.html",form=form,teacher=teacher)
+
+@app.route('/edit-teacher-api/<teacherID>', methods= ['GET'])
+def editTeacherApi(teacherID):
+    response  = requests.put(app.config['API_URL']+"/teachers/"+teacherID,json=request.args)
+    return redirect("/teachers")
+
+
+## Matières/Unités
+
+@app.route('/subjects')
+def subjects():
+    response  = requests.get(app.config['API_URL']+"/subjects")
+    return render_template("subjects.html",subjects=response.json())
+
+@app.route('/add-subject')
+def addSubject():
+    form = subjectForm()
+    return render_template("add-subject.html",form=form)
+
+@app.route('/add-subject-api', methods= ['GET'])
+def addSubjectApi():
+    response  = requests.post(app.config['API_URL']+"/subjects",json=request.args)
+    return redirect("/subjects")
+
+@app.route('/delete-subject/<subjectID>', methods= ['GET'])
+def deleteSubjectApi(subjectID):
+    response  = requests.delete(app.config['API_URL']+"/subjects/"+subjectID)
+    return redirect("/subjects")
+
+@app.route('/edit-subject/<subjectID>', methods= ['GET'])
+def updateSubject(subjectID):
+    response  = requests.get(app.config['API_URL']+"/subjects",json={"id":subjectID})
+    subject = response.json()[0]
+    form = subjectForm(obj=subject)
+    return render_template("edit-subject.html",form=form,subject=subject)
+
+@app.route('/edit-subject-api/<subjectID>', methods= ['GET'])
+def editSubjectApi(subjectID):
+    response  = requests.put(app.config['API_URL']+"/subjects/"+subjectID,json=request.args)
+    return redirect("/subjects")
+
 
 @app.errorhandler(404)
 def page_not_found(e):
