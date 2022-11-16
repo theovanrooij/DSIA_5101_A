@@ -8,6 +8,7 @@ router = APIRouter(prefix="/subjects")
 
 @router.post("/", tags=["subjects"])
 async def create_subject(subject: schemas.Subjects, db: Session = Depends(models.get_db)):
+    print(subject)
     return subjects_service.create_subject(subject=subject, db=db)
 
 

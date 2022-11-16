@@ -2,6 +2,9 @@ from sqlalchemy import Column, String, Date,DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from .database import BaseSQL
 
+from sqlalchemy.orm import relationship
+
+from .studentSubjectAssociation import Association
 
 class Student(BaseSQL):
     __tablename__ = "student"
@@ -14,4 +17,5 @@ class Student(BaseSQL):
     class_student = Column(String)
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
-    
+    subject = relationship("Association",back_populates="student")
+

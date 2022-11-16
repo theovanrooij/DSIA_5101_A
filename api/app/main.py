@@ -33,6 +33,15 @@ def addTeacher():
 def addSubject():
     return {"Subject": "World API"}
 
+
+@app.get("/add-subject-student")
+def addSubjectStudent():
+
+    import schemas
+    
+
+    return {"Subject": "World API"}
+
 @app.get("/date")
 def read_root():
     return {"Date": datetime.datetime.today()}

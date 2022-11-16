@@ -19,10 +19,13 @@ def get_subject_by_id(subject_id: str, db: Session) -> models.Subject:
     return record
 
 def create_subject(db: Session, subject: schemas.Subjects) -> models.Subject:
+
+    print(subject)
+    #Extraire student id et le convertir vers un objet student pour pouvoir réaliser l'insertion
     record = db.query(models.Subject).filter(models.Subject.id == subject.id).first()
     if record:
         raise HTTPException(status_code=409, detail="Already exists")
-    db_subject = models.Student(**subject.dict())
+    db_subject = models.Subject(**subject.dict())
     db.add(db_subject)
     db.commit()
     db.refresh(db_subject)

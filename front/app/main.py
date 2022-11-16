@@ -21,6 +21,12 @@ def students():
 
     return render_template("students.html",students=response.json())
 
+@app.route('/student/<studentID>')
+def studentDetail(studentID):
+    # return response.content
+    response  = requests.get(app.config['API_URL']+"/students",json={"id":studentID})
+    return response.content
+
 @app.route('/add-student')
 def addStudent():
     form = studentForm()
@@ -104,8 +110,10 @@ def addSubject():
 
 @app.route('/add-subject-api', methods= ['GET'])
 def addSubjectApi():
-    response  = requests.post(app.config['API_URL']+"/subjects",json=request.args)
-    return redirect("/subjects")
+    jsonDict = dict(request.args)
+    jsonDict["students"] = ["a9c98676-be8e-43a6-a3a1-7a9c5638b1dc"]
+    response  = requests.post(app.config['API_URL']+"/subjects",json=jsonDict)
+    return jsonDict #redirect("/subjects")
 
 @app.route('/delete-subject/<subjectID>', methods= ['GET'])
 def deleteSubjectApi(subjectID):
