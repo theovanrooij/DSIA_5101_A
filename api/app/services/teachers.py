@@ -19,6 +19,7 @@ def get_teacher_by_id(teacher_id: str, db: Session) -> models.Teacher:
     return record
 
 def create_teacher(db: Session, teacher: schemas.Teachers) -> models.Teacher:
+    print(teacher)
     record = db.query(models.Teacher).filter(models.Teacher.id == teacher.id).first()
     if record:
         raise HTTPException(status_code=409, detail="Already exists")

@@ -1,11 +1,13 @@
-from sqlalchemy import Column, String, Date,DateTime
+from sqlalchemy import Column, String, Date,DateTime,Table,ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
 from .database import BaseSQL
 
 from sqlalchemy.orm import relationship
 
-from .studentSubjectAssociation import Association
-
+StudentSubjectRelation = Table('studentsubjectrelation', BaseSQL.metadata,
+    Column('student_id', UUID(as_uuid=True), ForeignKey('student.id')),
+    Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id'))
+)
 class Student(BaseSQL):
     __tablename__ = "student"
 
@@ -17,5 +19,6 @@ class Student(BaseSQL):
     class_student = Column(String)
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
-    subject = relationship("Association",back_populates="student")
+    # subjects = relationship("Subject",secondary=StudentSubjectRelation,back_populates="subjects",
+    #                 cascade="all, delete")
 

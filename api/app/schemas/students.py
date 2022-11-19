@@ -14,7 +14,7 @@ class Students(BaseModel):
     class_student: str
     created_at: Annotated[date, Field(default_factory=lambda: datetime.now())]
     updated_at: Annotated[date, Field(default_factory=lambda: datetime.now())]
-    students: Optional[List]
+    subjects: Optional[List] = []
 
     class Config:
         orm_mode = True

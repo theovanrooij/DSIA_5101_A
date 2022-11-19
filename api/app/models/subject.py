@@ -1,9 +1,9 @@
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship,backref
 from .database import BaseSQL
+from .student import StudentSubjectRelation
 
-from .studentSubjectAssociation import Association
 class Subject(BaseSQL):
     __tablename__ = "subject"
 
@@ -12,6 +12,6 @@ class Subject(BaseSQL):
     name_subject = Column(String)
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
-    students = relationship("Association",back_populates="subject")
+    students = relationship("Student",secondary=StudentSubjectRelation,backref=backref('products', lazy='dynamic'), lazy='dynamic',cascade="all, delete")
 
 

@@ -111,9 +111,11 @@ def addSubject():
 @app.route('/add-subject-api', methods= ['GET'])
 def addSubjectApi():
     jsonDict = dict(request.args)
-    jsonDict["students"] = ["a9c98676-be8e-43a6-a3a1-7a9c5638b1dc"]
+    # jsonDict["students"] = ["a9c98676-be8e-43a6-a3a1-7a9c5638b1dc"]
     response  = requests.post(app.config['API_URL']+"/subjects",json=jsonDict)
-    return jsonDict #redirect("/subjects")
+
+    # return jsonDict 
+    return redirect("/subjects")
 
 @app.route('/delete-subject/<subjectID>', methods= ['GET'])
 def deleteSubjectApi(subjectID):
