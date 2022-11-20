@@ -20,6 +20,4 @@ class Student(BaseSQL):
     class_student = Column(String)
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
-    # subjects = relationship("Subject",secondary=StudentSubjectRelation,backref=backref('students', lazy='dynamic'), lazy='dynamic',cascade="all, delete")
-
 

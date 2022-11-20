@@ -41,10 +41,26 @@ def create_student(db: Session, student: schemas.Students) -> models.Student:
 
 
 def update_student(student_id: str, db: Session, student: schemas.Students) -> models.Student:
-    db_student = get_student_by_id(student_id=student_id, db=db)
+    from .subjects import get_subject_by_id
+    
+    db_student = get_student_by_id(student_id=student_id, db=db) 
+    
+    db_student.subjects = []
+    subjects = student.subjects
+    student.subjects = []
+
     for var, value in vars(student).items():
         setattr(db_student, var, value) if value else None
+
+    
+    print(student.subjects)
+    for subject in  subjects: 
+        db_student.subjects.append(get_subject_by_id(subject,db))
+
     db_student.updated_at = datetime.now()
+
+    print(db_student)
+    # return db_student
     db.add(db_student)
     db.commit()
     db.refresh(db_student)
