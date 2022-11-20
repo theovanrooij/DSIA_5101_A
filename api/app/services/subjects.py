@@ -5,7 +5,7 @@ from fastapi import HTTPException
 from datetime import datetime
 import models, schemas
 
-from .students import get_student_by_id
+
 
 def get_all_subjects(db: Session, skip: int = 0, limit: int = 10) -> List[models.Subject]:
     records = db.query(models.Subject).filter().offset(skip).limit(limit).all()
@@ -22,8 +22,7 @@ def get_subject_by_id(subject_id: str, db: Session) -> models.Subject:
 
 def create_subject(db: Session, subject: schemas.Subjects) -> models.Subject:
 
-
-    print("Subject :",subject)
+    from .students import get_student_by_id
     record = db.query(models.Subject).filter(models.Subject.id == subject.id).first()
     if record:
         raise HTTPException(status_code=409, detail="Already exists")

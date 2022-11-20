@@ -12,6 +12,6 @@ class Subject(BaseSQL):
     name_subject = Column(String)
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
-    students = relationship("Student",secondary=StudentSubjectRelation,backref=backref('products', lazy='dynamic'), lazy='dynamic',cascade="all, delete")
+    students = relationship("Student",secondary=StudentSubjectRelation,backref=backref('subjects', lazy='dynamic'), lazy='dynamic',cascade="all, delete")
 
 
