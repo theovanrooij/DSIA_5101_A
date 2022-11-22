@@ -75,21 +75,38 @@ def teachers():
 
     return render_template("teachers.html",teachers=response.json())
 
+@app.route('/teacher/<teacherID>')
+def teacherDetail(teacherID):
+    # return response.content
+    response  = requests.get(app.config['API_URL']+"/teachers",json={"id":teacherID})
+    return response.content
+
 @app.route('/add-teacher')
 def addTeacher():
-    form = teacherForm()
-    return render_template("add-teacher.html",form=form)
 
-@app.route('/add-teacher-api', methods= ['GET'])
+    form = teacherForm()
+    all_subjects  = requests.get(app.config['API_URL']+"/subjects")
+    return render_template("add-teacher.html",form=form, all_subjects=all_subjects.json())
+
+@app.route('/add-teacher-api', methods= ['POST','GET'])
 def addTeacherApi():
-    response  = requests.post(app.config['API_URL']+"/teachers",json=request.args)
+
+    formData = request.form.to_dict(flat=False)
+    new_teacher = dict()
+    for var,value in formData.items() : 
+        new_teacher[var] = value[0]
+    new_teacher["subjects"] = formData.get("subjects")
+
+    response  = requests.post(app.config['API_URL']+"/teachers",json=new_teacher)
     return redirect("/teachers")
+
 
 @app.route('/delete-teacher/<teacherID>', methods= ['GET'])
 def deleteTeacherApi(teacherID):
 
     response  = requests.delete(app.config['API_URL']+"/teachers/"+teacherID)
     return redirect("/teachers")
+
 
 @app.route('/edit-teacher/<teacherID>', methods= ['GET'])
 def updateTeacher(teacherID):

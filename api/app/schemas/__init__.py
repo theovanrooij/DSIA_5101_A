@@ -1,5 +1,9 @@
 from .studentBase import StudentBase
 from .studentWithSubjects import StudentWithSubjects
-from .subjectBase import SubjectBase
 from .subjectWithStudents import SubjectWithStudents
-from .teachers import Teacher
+
+from .teacherBase import TeacherBase
+from .teacherWithSubjects import TeacherWithSubjects
+from .subjectWithTeachers import SubjectWithTeachers
+
+from .subjectBase import SubjectBase
