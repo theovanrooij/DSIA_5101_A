@@ -101,7 +101,7 @@ def editTeacherApi(teacherID):
 @app.route('/subjects')
 def subjects():
     response  = requests.get(app.config['API_URL']+"/subjects")
-    return render_template("subjects.html",subjects=response.json())
+    return render_template("subjects.html",subjects=response.json(),all_subjects=response.json())
 
 @app.route('/add-subject')
 def addSubject():

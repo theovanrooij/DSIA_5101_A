@@ -55,5 +55,11 @@
 {% endfor %}
 </tbody>
     </table>
+
+    {% for subject in all_subjects %}  
+      <option value='{{subject.id}}'>{{subject.name_subject}}</option>    
+      {{subject}}   
+      {% endfor %}
+      
 </div>
 {% endblock %}

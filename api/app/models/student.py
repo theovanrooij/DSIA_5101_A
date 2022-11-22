@@ -7,8 +7,7 @@ from sqlalchemy.orm import relationship
 
 StudentSubjectRelation = Table('studentsubjectrelation', BaseSQL.metadata,
     Column('student_id', UUID(as_uuid=True), ForeignKey('student.id')),
-    Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id')),
-    Column('note', Integer)
+    Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id'))
 )
 class Student(BaseSQL):
     __tablename__ = "student"
