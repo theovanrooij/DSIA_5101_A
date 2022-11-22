@@ -6,9 +6,8 @@ from .database import BaseSQL
 from sqlalchemy.orm import relationship
 
 StudentSubjectRelation = Table('studentsubjectrelation', BaseSQL.metadata,
-    Column('student_id', UUID(as_uuid=True), ForeignKey('student.id')),
-    Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id')),
-    Column('note', Integer)
+    Column('student_id', UUID(as_uuid=True), ForeignKey('student.id',onupdate="CASCADE",ondelete="CASCADE")),
+    Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id',onupdate="CASCADE",ondelete="CASCADE"))
 )
 class Student(BaseSQL):
     __tablename__ = "student"
@@ -21,7 +20,7 @@ class Student(BaseSQL):
     class_student = Column(String)
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
-    subjects = relationship("Subject", secondary="studentsubjectrelation", back_populates='students',cascade="all,delete")
+    subjects = relationship("Subject", secondary="studentsubjectrelation", back_populates='students')
 
 
     def as_dict(self):
