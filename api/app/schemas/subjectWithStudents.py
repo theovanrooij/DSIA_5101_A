@@ -1,4 +1,5 @@
-from typing import List
+from typing import List,Optional
 from .subjectBase import SubjectBase
+
 class SubjectWithStudents(SubjectBase):
-    students: List
+    students: Optional[List]

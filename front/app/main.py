@@ -35,7 +35,7 @@ def addStudent():
 @app.route('/add-student-api', methods= ['GET'])
 def addStudentApi():
     response  = requests.post(app.config['API_URL']+"/students",json=request.args)
-    return request.args# redirect("/students")
+    return redirect("/students")
 
 @app.route('/delete-student/<studentID>', methods= ['GET'])
 def deleteStudentApi(studentID):

@@ -31,9 +31,9 @@ def create_student(db: Session, student: schemas.StudentWithSubjects) -> models.
     subjects = student_dict.pop("subjects")
 
     db_student = models.Student(**student_dict)
-
-    for subject in  subjects: 
-        db_student.subjects.append(get_subject_by_id(subject,db))
+    if subjects :
+        for subject in  subjects: 
+            db_student.subjects.append(get_subject_by_id(subject,db))
 
     db.add(db_student)
     db.commit()
