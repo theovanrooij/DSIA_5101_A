@@ -29,13 +29,18 @@ def studentDetail(studentID):
 
 @app.route('/add-student')
 def addStudent():
+
     form = studentForm()
-    return render_template("add-student.html",form=form)
+    all_subjects  = requests.get(app.config['API_URL']+"/subjects")
+    return render_template("add-student.html",form=form, all_subjects=all_subjects.json())
 
 @app.route('/add-student-api', methods= ['GET'])
 def addStudentApi():
+
+    studentssubjects = request.form.getlist('mymultiselect[]')
     response  = requests.post(app.config['API_URL']+"/students",json=request.args)
-    return redirect("/students")
+    return request.args
+    # return redirect("/students")
 
 @app.route('/delete-student/<studentID>', methods= ['GET'])
 def deleteStudentApi(studentID):

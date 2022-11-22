@@ -32,7 +32,7 @@ def create_student(db: Session, student: schemas.StudentWithSubjects) -> models.
 
     db_student = models.Student(**student_dict)
     if subjects :
-        for subject in  subjects: 
+        for subject in subjects: 
             db_student.subjects.append(get_subject_by_id(subject,db))
 
     db.add(db_student)
