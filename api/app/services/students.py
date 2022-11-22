@@ -52,18 +52,8 @@ def create_student(db: Session, student: schemas.StudentWithSubjects) -> models.
 def update_student(student_id: str, db: Session, student: schemas.StudentWithSubjects) -> models.Student:
     from .subjects import get_subject_by_id
 
-    # db_student = db.query(models.Student).filter(models.Student.id == student.id).first()
-    # print(db_student)
-
-    # record = db.query(models.Student).filter(models.Student.id == student.id).first()
-    # if record:
-    #     raise HTTPException(status_code=409, detail="Already exists")
-
-    # if not db_student:
-    #     raise HTTPException(status_code=404, detail="Not Found")
-
-    db_student = get_student_subjects_by_id(student_id=student_id, db=db) 
-    
+    db_student = get_student_by_id(student_id=student_id, db=db) 
+    print(db_student)
     subjects = student.subjects.copy()
     student.subjects.clear()
 
@@ -75,7 +65,7 @@ def update_student(student_id: str, db: Session, student: schemas.StudentWithSub
         db_student.subjects.append(get_subject_by_id(subject,db))
 
     db_student.updated_at = datetime.now()
-
+    print(db_student)
     db.add(db_student)
     db.commit()
     db.refresh(db_student)
