@@ -7,7 +7,7 @@ router = APIRouter(prefix="/subjects")
 
 
 @router.post("/", tags=["subjects"])
-async def create_subject(subject: schemas.Subjects, db: Session = Depends(models.get_db)):
+async def create_subject(subject: schemas.SubjectWithStudents, db: Session = Depends(models.get_db)):
     return subjects_service.create_subject(subject=subject, db=db)
 
 
@@ -22,7 +22,7 @@ async def get_subject_by_id(subject_id: str, db: Session = Depends(models.get_db
 
 
 @router.put("/{subject_id}", tags=["subjects"])
-async def update_subject_by_id(subject_id: str, subject: schemas.Subjects,
+async def update_subject_by_id(subject_id: str, subject: schemas.SubjectWithStudents,
                             db: Session = Depends(models.get_db)):
     return subjects_service.update_subject(subject_id=subject_id, db=db, subject=subject)
 

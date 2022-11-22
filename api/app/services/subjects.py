@@ -1,17 +1,19 @@
 from typing import List
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session,joinedload
 from fastapi import HTTPException
 from datetime import datetime
 import models, schemas
 
 
 
-def get_all_subjects(db: Session, skip: int = 0, limit: int = 10) -> List[models.Subject]:
-    records = db.query(models.Subject).filter().offset(skip).limit(limit).all()
+def get_all_subjects(db: Session, skip: int = 0, limit: int = 200) -> List[schemas.SubjectWithStudents]:
+    records = db.query(models.Subject).options(joinedload(models.Subject.students)).filter().offset(skip).limit(limit).all()
+    return_list = []
     for record in records:
         record.id = str(record.id)
-    return records
+        return_list.append(schemas.SubjectWithStudents.from_orm(record))
+    return return_list
 
 def get_subject_by_id(subject_id: str, db: Session) -> models.Subject:
     record = db.query(models.Subject).filter(models.Subject.id == subject_id).first()
@@ -20,7 +22,7 @@ def get_subject_by_id(subject_id: str, db: Session) -> models.Subject:
     record.id = str(record.id)
     return record
 
-def create_subject(db: Session, subject: schemas.Subjects) -> models.Subject:
+def create_subject(db: Session, subject: schemas.SubjectWithStudents) -> models.Subject:
 
     from .students import get_student_by_id
     record = db.query(models.Subject).filter(models.Subject.id == subject.id).first()
@@ -41,10 +43,22 @@ def create_subject(db: Session, subject: schemas.Subjects) -> models.Subject:
     return db_subject
 
 
-def update_subject(subject_id: str, db: Session, subject: schemas.Subjects) -> models.Subject:
+def update_subject(subject_id: str, db: Session, subject: schemas.SubjectWithStudents) -> models.Subject:
+    from .students import get_student_by_id
+
     db_subject = get_subject_by_id(subject_id=subject_id, db=db)
+
+    students = subject.subjects.copy()
+    subject.students = list()
+
+
     for var, value in vars(subject).items():
         setattr(db_subject, var, value) if value else None
+
+    db_subject.subjects = list()
+    for student in  students: 
+        db_subject.subjects.append(get_student_by_id(student,db))
+
     db_subject.updated_at = datetime.now()
     db.add(db_subject)
     db.commit()

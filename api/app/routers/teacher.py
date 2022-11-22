@@ -7,7 +7,7 @@ router = APIRouter(prefix="/teachers")
 
 
 @router.post("/", tags=["teachers"])
-async def create_teacher(teacher: schemas.Teachers, db: Session = Depends(models.get_db)):
+async def create_teacher(teacher: schemas.Teacher, db: Session = Depends(models.get_db)):
     return teachers_service.create_teacher(teacher=teacher, db=db)
 
 
@@ -22,7 +22,7 @@ async def get_teacher_by_id(teacher_id: str, db: Session = Depends(models.get_db
 
 
 @router.put("/{teacher_id}", tags=["teachers"])
-async def update_teacher_by_id(teacher_id: str, teacher: schemas.Teachers,
+async def update_teacher_by_id(teacher_id: str, teacher: schemas.Teacher,
                             db: Session = Depends(models.get_db)):
     return teachers_service.update_teacher(teacher_id=teacher_id, db=db, teacher=teacher)
 

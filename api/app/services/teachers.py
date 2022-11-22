@@ -18,7 +18,7 @@ def get_teacher_by_id(teacher_id: str, db: Session) -> models.Teacher:
     record.id = str(record.id)
     return record
 
-def create_teacher(db: Session, teacher: schemas.Teachers) -> models.Teacher:
+def create_teacher(db: Session, teacher: schemas.Teacher) -> models.Teacher:
     print(teacher)
     record = db.query(models.Teacher).filter(models.Teacher.id == teacher.id).first()
     if record:
@@ -30,7 +30,7 @@ def create_teacher(db: Session, teacher: schemas.Teachers) -> models.Teacher:
     db_teacher.id = str(db_teacher.id)
     return db_teacher
 
-def update_teacher(teacher_id: str, db: Session, teacher: schemas.Teachers) -> models.Teacher:
+def update_teacher(teacher_id: str, db: Session, teacher: schemas.Teacher) -> models.Teacher:
     db_teacher = get_teacher_by_id(teacher_id=teacher_id, db=db)
     for var, value in vars(teacher).items():
         setattr(db_teacher, var, value) if value else None

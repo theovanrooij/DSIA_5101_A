@@ -12,6 +12,9 @@ class Subject(BaseSQL):
     name_subject = Column(String)
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
-    students = relationship("Student",secondary=StudentSubjectRelation,backref=backref('subjects', lazy='dynamic'), lazy='dynamic',cascade="all,delete")
+    # students = relationship("Student",secondary=studentsubjectrelation,backref=backref('subjects', lazy='dynamic'), lazy='dynamic',cascade="all,delete")
+    students = relationship("Student", secondary="studentsubjectrelation", back_populates='subjects',cascade="all,delete")
 
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 

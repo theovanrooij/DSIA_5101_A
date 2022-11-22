@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Date,DateTime,Table,ForeignKey
+from sqlalchemy import Column, String, Date,DateTime,Table,ForeignKey,Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship,backref
 from .database import BaseSQL
@@ -7,7 +7,8 @@ from sqlalchemy.orm import relationship
 
 StudentSubjectRelation = Table('studentsubjectrelation', BaseSQL.metadata,
     Column('student_id', UUID(as_uuid=True), ForeignKey('student.id')),
-    Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id'))
+    Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id')),
+    Column('note', Integer)
 )
 class Student(BaseSQL):
     __tablename__ = "student"
@@ -20,4 +21,9 @@ class Student(BaseSQL):
     class_student = Column(String)
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
+    subjects = relationship("Subject", secondary="studentsubjectrelation", back_populates='students',cascade="all,delete")
+
+
+    def as_dict(self):
+       return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 

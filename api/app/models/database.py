@@ -12,7 +12,7 @@ POSTGRES_DB = os.environ.get("POSTGRES_DB")
 SQLALCHEMY_DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@db:5432/{POSTGRES_DB}"
 
 engine = create_engine(
-    SQLALCHEMY_DATABASE_URL
+    SQLALCHEMY_DATABASE_URL,echo=True
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=True, bind=engine)
 

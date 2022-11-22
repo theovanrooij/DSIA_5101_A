@@ -5,7 +5,7 @@ from uuid import uuid4
 from typing_extensions import Annotated
 
 
-class Teachers(BaseModel):
+class Teacher(BaseModel):
     id: Annotated[str, Field(default_factory=lambda: uuid4().hex)]
     family_name_teacher: str
     first_name_teacher: str

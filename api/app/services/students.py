@@ -1,16 +1,18 @@
 from typing import List
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session,joinedload
 from fastapi import HTTPException
 from datetime import datetime
 import models, schemas
 
 
-def get_all_students(db: Session, skip: int = 0, limit: int = 10) -> List[models.Student]:
-    records = db.query(models.Student).filter().offset(skip).limit(limit).all()
+def get_all_students(db: Session, skip: int = 0, limit: int = 200) -> List[schemas.StudentWithSubjects]:
+    records = db.query(models.Student).options(joinedload(models.Student.subjects)).filter().offset(skip).limit(limit).all()
+    return_list = []
     for record in records:
         record.id = str(record.id)
-    return records
+        return_list.append(schemas.StudentWithSubjects.from_orm(record))
+    return return_list
 
 def get_student_by_id(student_id: str, db: Session) -> models.Student:
     record = db.query(models.Student).filter(models.Student.id == student_id).first()
@@ -19,7 +21,7 @@ def get_student_by_id(student_id: str, db: Session) -> models.Student:
     record.id = str(record.id)
     return record
 
-def create_student(db: Session, student: schemas.Students) -> models.Student:
+def create_student(db: Session, student: schemas.StudentWithSubjects) -> models.Student:
     from .subjects import get_subject_by_id
     record = db.query(models.Student).filter(models.Student.id == student.id).first()
     if record:
@@ -40,26 +42,23 @@ def create_student(db: Session, student: schemas.Students) -> models.Student:
     return db_student
 
 
-def update_student(student_id: str, db: Session, student: schemas.Students) -> models.Student:
+def update_student(student_id: str, db: Session, student: schemas.StudentWithSubjects) -> models.Student:
     from .subjects import get_subject_by_id
     
     db_student = get_student_by_id(student_id=student_id, db=db) 
     
-    db_student.subjects = []
-    subjects = student.subjects
-    student.subjects = []
+    subjects = student.subjects.copy()
+    student.subjects = list()
 
     for var, value in vars(student).items():
         setattr(db_student, var, value) if value else None
 
-    
-    print(student.subjects)
+    db_student.subjects = list()
     for subject in  subjects: 
         db_student.subjects.append(get_subject_by_id(subject,db))
 
     db_student.updated_at = datetime.now()
 
-    print(db_student)
     # return db_student
     db.add(db_student)
     db.commit()
