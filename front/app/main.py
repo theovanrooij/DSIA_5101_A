@@ -34,13 +34,17 @@ def addStudent():
     all_subjects  = requests.get(app.config['API_URL']+"/subjects")
     return render_template("add-student.html",form=form, all_subjects=all_subjects.json())
 
-@app.route('/add-student-api', methods= ['GET'])
+@app.route('/add-student-api', methods= ['POST','GET'])
 def addStudentApi():
 
-    studentssubjects = request.form.getlist('mymultiselect[]')
-    response  = requests.post(app.config['API_URL']+"/students",json=request.args)
-    return request.args
-    # return redirect("/students")
+    formData = request.form.to_dict(flat=False)
+    new_student = dict()
+    for var,value in formData.items() : 
+        new_student[var] = value[0]
+    new_student["subjects"] = formData.get("subjects")
+
+    response  = requests.post(app.config['API_URL']+"/students",json=new_student)
+    return redirect("/students")
 
 @app.route('/delete-student/<studentID>', methods= ['GET'])
 def deleteStudentApi(studentID):

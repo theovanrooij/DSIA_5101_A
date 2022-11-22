@@ -4,7 +4,7 @@
 {% block content %}
 
 
-<form method="GET" action="/add-student-api" class="w-full max-w-sm">
+<form method="POST" action="/add-student-api" class="w-full max-w-sm">
     {% for field in form %}
 
     <div class="md:flex md:items-center mb-8">
@@ -17,7 +17,7 @@
     {% endfor %}
 
 
-    <select multiple id="mymultiselect" name="mymultiselect[]">       
+    <select multiple id="mymultiselect" name="subjects">       
       {% for subject in all_subjects %}  
       <option value='{{subject.id}}' name='{{subject.name_subject}}'>{{subject.name_subject}}</option>    
       {{subject.id}}   
