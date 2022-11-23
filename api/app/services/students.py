@@ -48,7 +48,6 @@ def create_student(db: Session, student: schemas.StudentWithSubjects) -> models.
     db_student.id = str(db_student.id)
     return db_student
 
-
 def update_student(student_id: str, db: Session, student: schemas.StudentWithSubjects) -> models.Student:
     from .subjects import get_subject_by_id
 

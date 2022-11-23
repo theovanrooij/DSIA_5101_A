@@ -57,12 +57,20 @@ def updateStudent(studentID):
 
     response  = requests.get(app.config['API_URL']+"/students",json={"id":studentID})
     student = response.json()[0]
+    all_subjects  = requests.get(app.config['API_URL']+"/subjects")
     form = studentForm(obj=student)
-    return render_template("edit-student.html",form=form,student=student)
+    return render_template("edit-student.html",form=form,student=student,all_subjects=all_subjects.json())
 
-@app.route('/edit-student-api/<studentID>', methods= ['GET'])
+@app.route('/edit-student-api/<studentID>', methods= ['POST','GET'])
 def editStudentApi(studentID):
-    response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=request.args)
+    formData = request.form.to_dict(flat=False)
+    former_student = dict()
+    for var,value in formData.items() : 
+        former_student[var] = value[0]
+    former_student["subjects"] = formData.get("subjects")
+    response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=former_student)
+    # response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=request.args)
+    # return response.content
     return redirect("/students")
 
 
@@ -71,13 +79,10 @@ def editStudentApi(studentID):
 @app.route('/teachers')
 def teachers():
     response  = requests.get(app.config['API_URL']+"/teachers")
-    return response.content
-
     return render_template("teachers.html",teachers=response.json())
 
 @app.route('/teacher/<teacherID>')
 def teacherDetail(teacherID):
-    # return response.content
     response  = requests.get(app.config['API_URL']+"/teachers",json={"id":teacherID})
     return response.content
 
@@ -113,12 +118,18 @@ def updateTeacher(teacherID):
 
     response  = requests.get(app.config['API_URL']+"/teachers",json={"id":teacherID})
     teacher = response.json()[0]
+    all_subjects  = requests.get(app.config['API_URL']+"/subjects")
     form = teacherForm(obj=teacher)
-    return render_template("edit-teacher.html",form=form,teacher=teacher)
+    return render_template("edit-teacher.html",form=form,teacher=teacher,all_subjects=all_subjects.json())
 
-@app.route('/edit-teacher-api/<teacherID>', methods= ['GET'])
+@app.route('/edit-teacher-api/<teacherID>', methods= ['POST','GET'])
 def editTeacherApi(teacherID):
-    response  = requests.put(app.config['API_URL']+"/teachers/"+teacherID,json=request.args)
+    formData = request.form.to_dict(flat=False)
+    former_teacher = dict()
+    for var,value in formData.items() : 
+        former_teacher[var] = value[0]
+    former_teacher["subjects"] = formData.get("subjects")
+    response  = requests.put(app.config['API_URL']+"/teachers/"+teacherID,json=former_teacher)
     return redirect("/teachers")
 
 

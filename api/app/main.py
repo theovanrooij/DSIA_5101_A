@@ -38,9 +38,16 @@ def addSubject():
 def addSubjectStudent():
 
     import schemas
-    
 
     return {"Subject": "World API"}
+
+@app.get("/add-subject-teacher")
+def addSubjectTeacher():
+
+    import schemas
+
+    return {"Subject": "World API"}
+
 
 @app.get("/date")
 def read_root():
