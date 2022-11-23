@@ -71,7 +71,7 @@ def editStudentApi(studentID):
 @app.route('/teachers')
 def teachers():
     response  = requests.get(app.config['API_URL']+"/teachers")
-    # return response.content
+    return response.content
 
     return render_template("teachers.html",teachers=response.json())
 

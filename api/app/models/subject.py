@@ -14,7 +14,7 @@ class Subject(BaseSQL):
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
     students = relationship("Student", secondary="studentsubjectrelation", back_populates='subjects')
-    students = relationship("Teacher", secondary="teachersubjectrelation", back_populates='teachers')
+    teachers = relationship("Teacher", secondary="teachersubjectrelation", back_populates='subjects')
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
