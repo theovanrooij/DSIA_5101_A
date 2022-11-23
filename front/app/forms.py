@@ -10,9 +10,9 @@ class studentForm(Form):
     class_student = StringField('Classe', validators=[DataRequired()])
 
 class teacherForm(Form):
-    family_name_teacher = StringField('Nom', validators=[DataRequired()])
-    first_name_teacher = StringField('Prénom', validators=[DataRequired()])
-    birth_date_teacher = DateField('Date de naissance', validators=[DataRequired()])
+    family_name = StringField('Nom', validators=[DataRequired()])
+    first_name = StringField('Prénom', validators=[DataRequired()])
+    birth_date = DateField('Date de naissance', validators=[DataRequired()])
 
 class subjectForm(Form):
     code_subject = StringField('Code de la matière/unité', validators=[DataRequired()])
