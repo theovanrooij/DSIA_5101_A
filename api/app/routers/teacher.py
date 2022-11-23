@@ -7,7 +7,7 @@ router = APIRouter(prefix="/teachers")
 
 
 @router.post("/", tags=["teachers"])
-async def create_student(teacher: schemas.TeacherWithSubjects, db: Session = Depends(models.get_db)):
+async def create_teacher(teacher: schemas.TeacherWithSubjects, db: Session = Depends(models.get_db)):
     return teachers_service.create_teacher(teacher=teacher, db=db)
 
 

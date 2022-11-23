@@ -9,6 +9,7 @@ StudentSubjectRelation = Table('studentsubjectrelation', BaseSQL.metadata,
     Column('student_id', UUID(as_uuid=True), ForeignKey('student.id',onupdate="CASCADE",ondelete="CASCADE")),
     Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id',onupdate="CASCADE",ondelete="CASCADE"))
 )
+
 class Student(BaseSQL):
     __tablename__ = "student"
 
