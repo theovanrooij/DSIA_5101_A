@@ -20,6 +20,11 @@ async def get_all_students(db: Session = Depends(models.get_db)):
 async def get_student_by_id(student_id: str, db: Session = Depends(models.get_db)):
     return students_service.get_student_by_id(student_id=student_id, db=db)
 
+@router.get("/subjects/{student_id}", tags=["students"])
+async def get_student_by_id(student_id: str, db: Session = Depends(models.get_db)):
+    return students_service.get_student_subjects_by_id(student_id=student_id, db=db)
+
+
 
 @router.put("/{student_id}", tags=["students"])
 async def update_student_by_id(student_id: str, student: schemas.StudentWithSubjects,

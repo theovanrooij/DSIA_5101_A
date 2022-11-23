@@ -24,7 +24,8 @@ def students():
 @app.route('/student/<studentID>')
 def studentDetail(studentID):
     # return response.content
-    response  = requests.get(app.config['API_URL']+"/students",json={"id":studentID})
+    response  = requests.get(app.config['API_URL']+"/students/subjects/"+studentID)
+    return render_template("student-detail.html",student=response.json())
     return response.content
 
 @app.route('/add-student')
@@ -45,6 +46,22 @@ def addStudentApi():
 
     response  = requests.post(app.config['API_URL']+"/students",json=new_student)
     return redirect("/students")
+
+@app.route('/student/remove-subject/<studentID>/<subjectID>', methods= ['POST','GET'])
+def removeStudentSubject(studentID,subjectID):
+
+    student =  requests.get(app.config['API_URL']+"/students/subjects/"+studentID).json()
+
+    subjects = student.get("subjects")
+    student["subjects"] = []
+    for subject in subjects :
+        if not subject.get("id") == subjectID :
+            student["subjects"].append(subject["id"])
+    # return student
+    response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=student)
+    return redirect("/student/"+studentID)
+
+
 
 @app.route('/delete-student/<studentID>', methods= ['GET'])
 def deleteStudentApi(studentID):
@@ -164,7 +181,7 @@ def deleteSubjectApi(subjectID):
 
 @app.route('/edit-subject/<subjectID>', methods= ['GET'])
 def updateSubject(subjectID):
-    response  = requests.get(app.config['API_URL']+"/subjects",json={"id":subjectID})
+    response  = requests.get(app.config['API_URL']+"/subject/"+subjectID)
     subject = response.json()[0]
     form = subjectForm(obj=subject)
     return render_template("edit-subject.html",form=form,subject=subject)
