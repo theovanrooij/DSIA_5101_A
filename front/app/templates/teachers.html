@@ -67,8 +67,8 @@
                 <td class="p-2 border-r"><a href="/teacher/{{teacher['id']}}">{{teacher["family_name"]}}</a></td>
                 <td class="p-2 border-r">{{teacher["first_name"]}}</td>
                 <td class="p-2 border-r">{{teacher["birth_date"]}}</td>
-                <td class="p-2 border-r">{% for item in teacher["subjects"] %}
-                    {{teacher["subjects"][0]["name_subject"]}}
+                <td class="p-2 border-r">| {% for item in teacher["subjects"] %}
+                    {{item["code_subject"]}} - {{item["name_subject"]}} |
                 {% endfor %}</td>
                 <td class="p-2 border-r"></td>
                 <td>

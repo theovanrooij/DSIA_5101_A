@@ -54,9 +54,8 @@ def deleteStudentApi(studentID):
 
 @app.route('/edit-student/<studentID>', methods= ['GET'])
 def updateStudent(studentID):
-
-    response  = requests.get(app.config['API_URL']+"/students",json={"id":studentID})
-    student = response.json()[0]
+    response  = requests.get(app.config['API_URL']+"/students/"+studentID)
+    student = response.json()
     all_subjects  = requests.get(app.config['API_URL']+"/subjects")
     form = studentForm(obj=student)
     return render_template("edit-student.html",form=form,student=student,all_subjects=all_subjects.json())
@@ -64,11 +63,15 @@ def updateStudent(studentID):
 @app.route('/edit-student-api/<studentID>', methods= ['POST','GET'])
 def editStudentApi(studentID):
     formData = request.form.to_dict(flat=False)
-    former_student = dict()
+    new_student = dict()
     for var,value in formData.items() : 
-        former_student[var] = value[0]
-    former_student["subjects"] = formData.get("subjects")
-    response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=former_student)
+        print(var,value)
+        new_student[var] = value[0]
+    new_subjects = formData.get("subjects")
+    new_student["subjects"] = new_subjects if new_subjects else []
+    new_student["id"] = studentID
+    # return new_student
+    response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=new_student)
     # response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=request.args)
     # return response.content
     return redirect("/students")

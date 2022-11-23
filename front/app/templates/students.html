@@ -86,8 +86,8 @@
                 <td class="p-2 border-r">{{student["birth_date"]}}</td>
                 <td class="p-2 border-r">{{student["academic_level"]}}</td>
                 <td class="p-2 border-r">{{student["class_student"]}}</td>
-                <td class="p-2 border-r">{% for item in student["subjects"] %}
-                    {{student["subjects"][0]["name_subject"]}}
+                <td class="p-2 border-r">|{% for item in student["subjects"] %}
+                    {{item["code_subject"]}} - {{item["name_subject"]}} |
                 {% endfor %}</td>
                 <td class="p-2 border-r"></td>
                 <td>
