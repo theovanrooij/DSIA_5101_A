@@ -68,7 +68,7 @@
                 <td class="p-2 border-r">{{teacher["first_name"]}}</td>
                 <td class="p-2 border-r">{{teacher["birth_date"]}}</td>
                 <td class="p-2 border-r">{% for item in teacher["subjects"] %}
-                    {{teacher["subjects"][0]["name_subject"]}}
+                    {{item["name_subject"]}}
                 {% endfor %}</td>
                 <td class="p-2 border-r"></td>
                 <td>
