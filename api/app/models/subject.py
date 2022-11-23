@@ -3,7 +3,6 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship,backref
 from .database import BaseSQL
 from .student import StudentSubjectRelation
-from .teacher import TeacherSubjectRelation
 
 class Subject(BaseSQL):
     __tablename__ = "subject"
@@ -14,7 +13,6 @@ class Subject(BaseSQL):
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
     students = relationship("Student", secondary="studentsubjectrelation", back_populates='subjects')
-    students = relationship("Teacher", secondary="teachersubjectrelation", back_populates='teachers')
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
