@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship,backref
 from .database import BaseSQL
-from .student import StudentSubjectRelation
+# from .student import StudentSubjectRelation
 from .teacher import TeacherSubjectRelation
 
 class Subject(BaseSQL):

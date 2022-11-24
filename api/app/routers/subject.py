@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from services import subjects as subjects_service
 import schemas, models
 from sqlalchemy.orm import Session
+from typing import List
 
 router = APIRouter(prefix="/subjects")
 
@@ -10,8 +11,8 @@ router = APIRouter(prefix="/subjects")
 async def create_subject(subject: schemas.SubjectWithStudents, db: Session = Depends(models.get_db)):
     return subjects_service.create_subject(subject=subject, db=db)
 
-
-@router.get("/", tags=["subjects"])
+@router.get("/", tags=["subjects"],response_model=List[schemas.SubjectWithStudents],
+response_model_by_alias=False,response_model_exclude={"note"})
 async def get_all_subjects(db: Session = Depends(models.get_db)):
     return subjects_service.get_all_subjects(db=db)
 
