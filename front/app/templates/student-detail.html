@@ -1,9 +1,9 @@
 {% extends "base.html" %} <!--reprend le contenu de la template base.html-->
-{% block title %}Liste des élèves{% endblock %} <!--remplace le contenu du bloc title de base-->
+{% block title %}Détails de l'élève{% endblock %} <!--remplace le contenu du bloc title de base-->
 
 {% block content %}
 
-<!-- TODO : Filtre sur nom, prenom, et unités -->
+<!-- TODO : Filtre sur nom, prénom, et unités -->
 
 <div class="flex flew-row justify-between items-center p-1">
     <div class="lg:flex lg:items-center lg:justify-between">
@@ -39,7 +39,7 @@
 
 <!-- component -->
 <div class="table w-full p-2">
-    <h3>Liste des cours auxquels l'étudiant est inscrit :</h3>
+    <h3>Liste des cours auxquels l'étudiant(e) est inscrit(e) :</h3>
     <table class="w-full border">
         <thead>
             <tr class="bg-gray-50 border-b">
@@ -83,7 +83,7 @@
                 <td class="p-2 border-r">{{subject["code_subject"]}}</td>
                 <td class="p-2 border-r">{{subject["name_subject"]}}</td>
                 <td>
-                    <a href="/student/remove-subject/{{student['id']}}/{{subject['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Unsubsribe</a>
+                    <a href="/student/remove-subject/{{student['id']}}/{{subject['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Désinscrire</a>
                 </td>
             </tr>
             {% endfor %}

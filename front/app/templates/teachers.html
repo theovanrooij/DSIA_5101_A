@@ -65,14 +65,14 @@
  
             <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
                 <td class="p-2 border-r"><a href="/teacher/{{teacher['id']}}">{{teacher["family_name"]}}</a></td>
-                <td class="p-2 border-r">{{teacher["first_name"]}}</td>
+                <td class="p-2 border-r"><a href="/teacher/{{teacher['id']}}">{{teacher["first_name"]}}</a></td>
                 <td class="p-2 border-r">{{teacher["birth_date"]}}</td>
                 <td class="p-2 border-r">| {% for item in teacher["subjects"] %}
                     {{item["code_subject"]}} - {{item["name_subject"]}} |
                 {% endfor %}</td>
                 <td>
-                    <a href="/edit-teacher/{{teacher['id']}}" class="bg-blue-500 p-2 text-white hover:shadow-lg text-xs font-thin">Edit</a>
-                    <a href="/delete-teacher/{{teacher['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Remove</a>
+                    <a href="/edit-teacher/{{teacher['id']}}" class="bg-blue-500 p-2 text-white hover:shadow-lg text-xs font-thin">Modifier</a>
+                    <a href="/delete-teacher/{{teacher['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Supprimer</a>
                 </td>
             </tr>
         

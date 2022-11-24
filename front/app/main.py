@@ -103,8 +103,9 @@ def teachers():
 
 @app.route('/teacher/<teacherID>')
 def teacherDetail(teacherID):
-    response  = requests.get(app.config['API_URL']+"/teachers",json={"id":teacherID})
-    return response.content
+    response  = requests.get(app.config['API_URL']+"/teachers/subjects/"+teacherID)
+    return render_template("teacher-detail.html",teacher=response.json())
+
 
 @app.route('/add-teacher')
 def addTeacher():
@@ -124,6 +125,21 @@ def addTeacherApi():
 
     response  = requests.post(app.config['API_URL']+"/teachers",json=new_teacher)
     return redirect("/teachers")
+
+
+@app.route('/teacher/remove-subject/<teacherID>/<subjectID>', methods= ['POST','GET'])
+def removeTeacherSubject(teacherID,subjectID):
+
+    teacher =  requests.get(app.config['API_URL']+"/teachers/subjects/"+teacherID).json()
+
+    subjects = teacher.get("subjects")
+    teacher["subjects"] = []
+    for subject in subjects :
+        if not subject.get("id") == subjectID :
+            teacher["subjects"].append(subject["id"])
+    response  = requests.put(app.config['API_URL']+"/teachers/"+teacherID,json=teacher)
+    return redirect("/teacher/"+teacherID)
+
 
 
 @app.route('/delete-teacher/<teacherID>', methods= ['GET'])
@@ -196,7 +212,7 @@ def editSubjectApi(subjectID):
 def page_not_found(e):
     return redirect("/")
 
-# TODO : Détail d'un élève
+
 
 if __name__ == '__main__':
     
