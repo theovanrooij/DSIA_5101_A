@@ -36,6 +36,7 @@ def create_student(db: Session, student: schemas.StudentWithSubjects) -> models.
 
     student_dict = student.dict()
     subjects = student_dict.pop("subjects")
+    note = student_dict.pop("note")
 
     db_student = models.Student(**student_dict)
     if subjects :

@@ -13,7 +13,7 @@ class Subject(BaseSQL):
     name_subject = Column(String)
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
-    students = relationship("Student", secondary="studentsubjectrelation", back_populates='subjects')
+    students = relationship("StudentSubject", back_populates='subject')
     teachers = relationship("Teacher", secondary="teachersubjectrelation", back_populates='subjects')
 
     def as_dict(self):

@@ -10,6 +10,13 @@ StudentSubjectRelation = Table('studentsubjectrelation', BaseSQL.metadata,
     Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id',onupdate="CASCADE",ondelete="CASCADE"))
 )
 
+class StudentSubject(BaseSQL):
+    __tablename__ ='studentsubject'
+    student_id = Column(ForeignKey('student.id'), primary_key=True)
+    subjects_id = Column(ForeignKey('subject.id'), primary_key=True)
+    note = Column(Integer, nullable=True)
+    student = relationship("Student", back_populates="subjects")
+    subject = relationship("Subject", back_populates="students")
 class Student(BaseSQL):
     __tablename__ = "student"
 
@@ -21,7 +28,7 @@ class Student(BaseSQL):
     class_student = Column(String)
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
-    subjects = relationship("Subject", secondary="studentsubjectrelation", back_populates='students')
+    subjects = relationship("StudentSubject", back_populates='student')
 
 
     def as_dict(self):
