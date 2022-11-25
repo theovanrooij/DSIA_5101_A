@@ -17,6 +17,7 @@ La page élèves regroupe tous les élèves de la database en plusieurs colonnes
 - classes ;
 - matières à lesquelles ils sont inscrits.
 Nous pouvons ajouter directement des élèves en clickant sur le bouton "Ajouter un élève" en haut à droite de notre page. Depuis la page de création, nous pouvons rentrer les détails mentionnés au-dessus, et sélectionner les matières à lesquelles l'élève est inscrit (il faut au préalable ajouter des matières dans la page Matières/Unités).
+Pour inscrire les élèves à plusieurs matières, il faut cliquer sur CTRL et sélectionner les matières voulues, ou bien SHIFT pour en sélectionner plusieurs de suite.
 Nous pouvons gérer les élèves à partir de cette page, modifier leurs informations si besoin, ou bien même supprimer des élèves depuis la colonne "Actions" et des boutons "Modifier" et "Supprimer".
 
 ### Page d'un élève spécifique
@@ -35,6 +36,7 @@ La page élèves regroupe tous les professeurs de la database en plusieurs colon
 - dates de naissance ;
 - matières qu'ils enseignent.
 Nous pouvons ajouter directement des professeurs en clickant sur le bouton "Ajouter un professeur" en haut à droite de notre page. Depuis la page de création, nous pouvons rentrer les détails mentionnés au-dessus, et sélectionner les matières qu'enseigne le professeur (il faut au préalable ajouter des matières dans la page Matières/Unités).
+Pour associer les professeurs à plusieurs matières, il faut cliquer sur CTRL et sélectionner les matières voulues, ou bien SHIFT pour en sélectionner plusieurs de suite.
 Nous pouvons gérer les élèves à partir de cette page, modifier leurs informations si besoin, ou bien même supprimer des professeurs depuis la colonne "Actions" et des boutons "Modifier" et "Supprimer".
 
 ### Page d'un professeur spécifique
@@ -52,3 +54,11 @@ La page Latières/Unités regroupe toutes les matières de la database en plusie
 - nom de la matière/unité.
 Nous pouvons ajouter directement des matières en clickant sur le bouton "Ajouter une matière/unité" en haut à gauche de notre page. Depuis la page de création, nous pouvons rentrer les détails mentionnés au-dessus.
 Nous pouvons gérer les matières/unités à partir de cette page, modifier leurs informations si besoin, ou bien même supprimer des matières depuis la colonne "Actions" et des boutons "Modifier" et "Supprimer".
+
+<!--
+En cours de code
+ ### Page d'une matière/unité spécifique
+Il est possible de clicker sur le code ou le nom d'une matière/unité en particulier (directemenet depuis la table), pour accéder à sa page matière/unité spécifique dans laquelle nous pouvons voir :
+- code et nom de l'unité ;
+- tous les élèves inscrits et professeurs associés au cours.
+Nous pouvons aussi modifier directement la matière/unité en clickant sur le bouton "Modifier l'unité" en haut à droite de notre page. -->
