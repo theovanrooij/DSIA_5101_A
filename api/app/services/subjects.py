@@ -51,13 +51,12 @@ def create_subject(db: Session, subject: schemas.SubjectInsert) -> models.Subjec
     relation_list = list()
     if students :
         for student in  students: 
-            if len(student) == 2 :
-                note = student[1]
-            else:
+            note = student[1]
+            if note == -1 : 
                 note = None
 
             db_student = get_student_by_id(student[0],db)
-            relation_list.append(StudentSubject(subject_id=db_subject.id,student_id=db_student.id,note=note))
+            relation_list.append(models.StudentSubject(subject_id=db_subject.id,student_id=db_student.id,note=note))
     db.add_all(relation_list)
     db.commit()
     db.refresh(db_subject)
@@ -79,31 +78,32 @@ def update_subject(subject_id: str, db: Session, subject: schemas.SubjectInsert)
     for var, value in vars(subject).items():
         setattr(db_subject, var, value) if value else None
 
-    for student in db_subject.students : 
-        db.delete(student)
+    # for student in db_subject.students : 
+    #     db.delete(student)
     
     db_subject.updated_at = datetime.now()
-    db.commit()
-    db.refresh(db_subject)
-    
-    if students :
-        for student in  students: 
-            if len(student) == 2 :
-                note = student[1]
-            else:
-                note = None
-            db_student = get_student_by_id(student[0],db)
-            db_subject.students.append(StudentSubject(subject_id=db_subject.id,student_id=db_student.id,note=note))
-
-    
     db.add(db_subject)
     db.commit()
     db.refresh(db_subject)
+    
+    # if students :
+    #     for student in  students: 
+    #         note = student[1]
+    #         if note == -1 : 
+    #             note = None
+
+    #         db_student = get_student_by_id(student[0],db)
+    #         db_subject.students.append(models.StudentSubject(subject_id=db_subject.id,student_id=db_student.id,note=note))
+
+    
+    #     db.add(db_subject)
+    #     db.commit()
+    #     db.refresh(db_subject)
     return db_subject
 
 
 def delete_subject(subject_id: str, db: Session) -> models.Subject:
-    db_subject = get_subject_students_by_id(subject_id=subject_id, db=db)
+    db_subject = get_subject_by_id(subject_id=subject_id, db=db)
 
     for student in db_subject.students : 
         db.delete(student)

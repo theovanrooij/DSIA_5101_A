@@ -1,5 +1,5 @@
 from .studentBase import StudentBase
-from .studentWithSubjects import StudentWithSubjects
+from .studentWithSubjects import StudentWithSubjects,StudentInsert
 from .subjectWithStudents import SubjectWithStudents,SubjectInsert
 
 from .teacherBase import TeacherBase

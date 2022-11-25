@@ -23,10 +23,8 @@ def students():
 
 @app.route('/student/<studentID>')
 def studentDetail(studentID):
-    # return response.content
-    response  = requests.get(app.config['API_URL']+"/students/subjects/"+studentID)
+    response  = requests.get(app.config['API_URL']+"/students/"+studentID)
     return render_template("student-detail.html",student=response.json())
-    return response.content
 
 @app.route('/add-student')
 def addStudent():
@@ -42,22 +40,22 @@ def addStudentApi():
     new_student = dict()
     for var,value in formData.items() : 
         new_student[var] = value[0]
-    new_student["subjects"] = formData.get("subjects")
-
+    new_student["subjects"] = []
+    for student in formData.get("subjects") : 
+        new_student["subjects"].append([student,-1])
     response  = requests.post(app.config['API_URL']+"/students",json=new_student)
     return redirect("/students")
 
 @app.route('/student/remove-subject/<studentID>/<subjectID>', methods= ['POST','GET'])
 def removeStudentSubject(studentID,subjectID):
 
-    student =  requests.get(app.config['API_URL']+"/students/subjects/"+studentID).json()
-
+    student =  requests.get(app.config['API_URL']+"/students/"+studentID).json()
+    # return student
     subjects = student.get("subjects")
     student["subjects"] = []
     for subject in subjects :
         if not subject.get("id") == subjectID :
-            student["subjects"].append(subject["id"])
-    # return student
+            student["subjects"].append([subject["id"],subject["note"] if subject["note"] else -1])
     response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=student)
     return redirect("/student/"+studentID)
 
@@ -82,14 +80,17 @@ def editStudentApi(studentID):
     formData = request.form.to_dict(flat=False)
     new_student = dict()
     for var,value in formData.items() : 
-        print(var,value)
         new_student[var] = value[0]
-    new_subjects = formData.get("subjects")
-    new_student["subjects"] = new_subjects if new_subjects else []
+    new_subjects = list()
+
+    subjectsForm = formData.get("subjects")
+    if subjectsForm :
+        for subject in  subjectsForm: 
+            new_subjects.append([subject,-1])
+        new_student["subjects"] = new_subjects if new_subjects else []
     new_student["id"] = studentID
     # return new_student
     response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=new_student)
-    # response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=request.args)
     # return response.content
     return redirect("/students")
 
@@ -168,7 +169,6 @@ def addSubject():
 @app.route('/add-subject-api', methods= ['GET'])
 def addSubjectApi():
     jsonDict = dict(request.args)
-    # jsonDict["students"] = ["a9c98676-be8e-43a6-a3a1-7a9c5638b1dc"]
     response  = requests.post(app.config['API_URL']+"/subjects",json=jsonDict)
 
     # return jsonDict 
@@ -181,14 +181,20 @@ def deleteSubjectApi(subjectID):
 
 @app.route('/edit-subject/<subjectID>', methods= ['GET'])
 def updateSubject(subjectID):
-    response  = requests.get(app.config['API_URL']+"/subject/"+subjectID)
-    subject = response.json()[0]
+    response  = requests.get(app.config['API_URL']+"/subjects/"+subjectID)
+    subject = response.json()
     form = subjectForm(obj=subject)
     return render_template("edit-subject.html",form=form,subject=subject)
 
 @app.route('/edit-subject-api/<subjectID>', methods= ['GET'])
 def editSubjectApi(subjectID):
-    response  = requests.put(app.config['API_URL']+"/subjects/"+subjectID,json=request.args)
+    # return request.args
+    formData = request.args.to_dict()
+    new_subject = dict()
+    for var,value in formData.items() : 
+        new_subject[var] = value
+    new_subject["id"] = subjectID
+    response  = requests.put(app.config['API_URL']+"/subjects/"+subjectID,json=new_subject)
     return redirect("/subjects")
 
 
