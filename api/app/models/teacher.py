@@ -5,6 +5,8 @@ from .database import BaseSQL
 
 from sqlalchemy.orm import relationship
 
+# from .subject import SubjectTeacherRelation
+
 TeacherSubjectRelation = Table('teachersubjectrelation', BaseSQL.metadata,
     Column('teacher_id', UUID(as_uuid=True), ForeignKey('teacher.id',onupdate="CASCADE",ondelete="CASCADE")),
     Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id',onupdate="CASCADE",ondelete="CASCADE"))

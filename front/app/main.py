@@ -176,6 +176,15 @@ def subjects():
     response  = requests.get(app.config['API_URL']+"/subjects")
     return render_template("subjects.html",subjects=response.json(),all_subjects=response.json())
 
+@app.route('/subject/<subjectID>')
+def subjectDetail(subjectID):
+    students  = requests.get(app.config['API_URL']+"/subjects/students/"+subjectID)
+    teachers = requests.get(app.config['API_URL']+"/subjects/teachers/"+subjectID)
+    response  = requests.get(app.config['API_URL']+"/subjects/"+subjectID)
+    # return students.json()
+    return render_template("subject-detail.html", subject=response.json(),students=students.json(), teachers=teachers.json())
+
+
 @app.route('/add-subject')
 def addSubject():
     form = subjectForm()
