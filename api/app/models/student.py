@@ -5,7 +5,7 @@ from .database import BaseSQL
 
 from sqlalchemy.orm import relationship
 
-# from .subject import SubjectStudentRelation
+from .subject import SubjectStudentRelation
 
 
 StudentSubjectRelation = Table('studentsubjectrelation', BaseSQL.metadata,
@@ -25,6 +25,7 @@ class Student(BaseSQL):
     created_at = Column(DateTime())
     updated_at = Column(DateTime())
     subjects = relationship("Subject", secondary="studentsubjectrelation", back_populates='students')
+    subjects_stu = relationship("Subject", secondary="subjectstudentrelation", back_populates='students_sub')
 
 
     def as_dict(self):

@@ -6,15 +6,15 @@ from .student import StudentSubjectRelation
 from .teacher import TeacherSubjectRelation
 
 
-# SubjectStudentRelation = Table('subjectstudentrelation', BaseSQL.metadata,
-#     Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id',onupdate="CASCADE",ondelete="CASCADE")),
-#     Column('student_id', UUID(as_uuid=True), ForeignKey('student.id',onupdate="CASCADE",ondelete="CASCADE"))
-# )
+SubjectStudentRelation = Table('subjectstudentrelation', BaseSQL.metadata,
+    Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id',onupdate="CASCADE",ondelete="CASCADE")),
+    Column('student_id', UUID(as_uuid=True), ForeignKey('student.id',onupdate="CASCADE",ondelete="CASCADE"))
+)
 
-# SubjectTeacherRelation = Table('subjectteacherrelation', BaseSQL.metadata,
-#     Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id',onupdate="CASCADE",ondelete="CASCADE")),
-#     Column('teacher_id', UUID(as_uuid=True), ForeignKey('teacher.id',onupdate="CASCADE",ondelete="CASCADE"))
-# )
+SubjectTeacherRelation = Table('subjectteacherrelation', BaseSQL.metadata,
+    Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id',onupdate="CASCADE",ondelete="CASCADE")),
+    Column('teacher_id', UUID(as_uuid=True), ForeignKey('teacher.id',onupdate="CASCADE",ondelete="CASCADE"))
+)
 
 
 class Subject(BaseSQL):
@@ -27,8 +27,8 @@ class Subject(BaseSQL):
     updated_at = Column(DateTime())
     students = relationship("Student", secondary="studentsubjectrelation", back_populates='subjects')
     teachers = relationship("Teacher", secondary="teachersubjectrelation", back_populates='subjects')
-    # students = relationship("Student", secondary="subjectstudentrelation", back_populates='subjects')
-    # teachers = relationship("Teacher", secondary="subjectteacherrelation", back_populates='teachers')
+    students_sub = relationship("Student", secondary="subjectstudentrelation", back_populates='subjects_stu')
+    teachers_sub = relationship("Teacher", secondary="subjectteacherrelation", back_populates='subjects_tea')
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
