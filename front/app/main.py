@@ -200,8 +200,6 @@ def addSubjectApi():
     jsonDict = dict(request.args)
     response  = requests.post(app.config['API_URL']+"/subjects",json=jsonDict)
 
-    return jsonDict
-    # return response.content 
     return redirect("/subjects")
 
 @app.route('/delete-subject/<subjectID>', methods= ['GET'])
