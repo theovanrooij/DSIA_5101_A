@@ -52,17 +52,21 @@ def update_teacher(teacher_id: str, db: Session, teacher: schemas.TeacherWithSub
     from .subjects import get_subject_by_id
 
     db_teacher = get_teacher_by_id(teacher_id=teacher_id, db=db) 
- 
-    subjects = teacher.subjects.copy()
-    teacher.subjects.clear()
+    
+    subjects = teacher.subjects
+    if subjects :
+        subjects = subjects.copy()
+        teacher.subjects.clear()
+
 
     for var, value in vars(teacher).items():
         setattr(db_teacher, var, value) if value else None
 
     db_teacher.subjects.clear()
-    for subject in  subjects: 
-        db_teacher.subjects.append(get_subject_by_id(subject,db))
-
+    if subjects :
+        for subject in  subjects: 
+            db_teacher.subjects.append(get_subject_by_id(subject,db))
+    
     db_teacher.updated_at = datetime.now()
     print(db_teacher)
     db.add(db_teacher)

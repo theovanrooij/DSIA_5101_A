@@ -153,20 +153,22 @@ def deleteTeacherApi(teacherID):
 @app.route('/edit-teacher/<teacherID>', methods= ['GET'])
 def updateTeacher(teacherID):
 
-    response  = requests.get(app.config['API_URL']+"/teachers",json={"id":teacherID})
-    teacher = response.json()[0]
+    response  = requests.get(app.config['API_URL']+"/teachers/"+teacherID)
+    teacher = response.json()
     all_subjects  = requests.get(app.config['API_URL']+"/subjects")
     form = teacherForm(obj=teacher)
     return render_template("edit-teacher.html",form=form,teacher=teacher,all_subjects=all_subjects.json())
 
 @app.route('/edit-teacher-api/<teacherID>', methods= ['POST','GET'])
 def editTeacherApi(teacherID):
+    
     formData = request.form.to_dict(flat=False)
-    former_teacher = dict()
+    new_teacher = dict()
     for var,value in formData.items() : 
-        former_teacher[var] = value[0]
-    former_teacher["subjects"] = formData.get("subjects")
-    response  = requests.put(app.config['API_URL']+"/teachers/"+teacherID,json=former_teacher)
+        new_teacher[var] = value[0]
+    new_teacher["subjects"] = formData.get("subjects")
+    new_teacher["id"] = teacherID
+    response  = requests.put(app.config['API_URL']+"/teachers/"+teacherID,json=new_teacher)
     return redirect("/teachers")
 
 
@@ -176,6 +178,15 @@ def editTeacherApi(teacherID):
 def subjects():
     response  = requests.get(app.config['API_URL']+"/subjects")
     return render_template("subjects.html",subjects=response.json(),all_subjects=response.json())
+
+
+@app.route('/subject/<subjectID>')
+def subjectDetail(subjectID):
+    students  = requests.get(app.config['API_URL']+"/subjects/students/"+subjectID)
+    teachers = requests.get(app.config['API_URL']+"/subjects/teachers/"+subjectID)
+    response  = requests.get(app.config['API_URL']+"/subjects/"+subjectID)
+    # return students.json()
+    return render_template("subject-detail.html", subject=response.json(),students=students.json(), teachers=teachers.json())
 
 @app.route('/add-subject')
 def addSubject():
@@ -213,6 +224,55 @@ def editSubjectApi(subjectID):
     response  = requests.put(app.config['API_URL']+"/subjects/"+subjectID,json=new_subject)
     return redirect("/subjects")
 
+@app.route('/subjects/remove-teacher/<subjectID>/<teacherID>', methods= ['POST','GET'])
+def removeSubjectTeacher(subjectID,teacherID):
+
+    subject =  requests.get(app.config['API_URL']+"/subjects/"+subjectID)
+    # return teacherID
+    subject = subject.json()
+    teachers = subject.get("teachers")
+    subject["teachers"] = []
+    if teachers :
+        for teacher in teachers :
+            if not teacher.get("id") == teacherID :
+                subject["teachers"].append(teacher["id"])
+
+    students = subject.get("students")
+    subject["students"] = []
+    if students :
+        for student in students :
+            note = student["note"]
+            if not note : 
+                note=-1
+            subject["students"].append([student["id"],note])
+    # return subject
+    response  = requests.put(app.config['API_URL']+"/subjects/"+subjectID,json=subject)
+    # return response.content
+    return redirect("/subject/"+subjectID)
+
+@app.route('/subjects/remove-student/<subjectID>/<studentID>', methods= ['POST','GET'])
+def removeSubjectStudent(subjectID,studentID):
+
+    subject =  requests.get(app.config['API_URL']+"/subjects/"+subjectID)
+    subject = subject.json()
+    teachers = subject.get("teachers")
+    subject["teachers"] = []
+    if teachers :
+        for teacher in teachers :
+            subject["teachers"].append(teacher["id"])
+
+    students = subject.get("students")
+    subject["students"] = []
+    for student in students :
+        if not student.get("id") == studentID :
+            note = student["note"]
+            if not note : 
+                note=-1
+            subject["students"].append([student["id"],note])
+    # return subject
+    response  = requests.put(app.config['API_URL']+"/subjects/"+subjectID,json=subject)
+    # return response.content
+    return redirect("/subject/"+subjectID)
 
 @app.errorhandler(404)
 def page_not_found(e):

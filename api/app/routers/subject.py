@@ -18,7 +18,13 @@ async def get_all_subjects(db: Session = Depends(models.get_db)):
 @router.get("/{subject_id}", tags=["subjects"],response_model=schemas.SubjectWithStudents,
 response_model_by_alias=False,response_model_exclude={"note"})
 async def get_subject_by_id(subject_id: str, db: Session = Depends(models.get_db)):
-    return subjects_service.get_subject_students_by_id(subject_id=subject_id, db=db)
+    record = subjects_service.get_subject_by_id(subject_id=subject_id, db=db)
+    record.id = str(record.id)
+    for student in record.students:
+            student.student_id = str(student.student_id)
+    for teacher in record.teachers:
+        teacher.id = str(teacher.id)
+    return record
 
 @router.put("/{subject_id}", tags=["subjects"])
 async def update_subject_by_id(subject_id: str, subject: schemas.SubjectInsert,

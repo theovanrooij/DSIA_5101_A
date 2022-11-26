@@ -8,4 +8,4 @@ class SubjectWithStudents(SubjectBase):
     
 class SubjectInsert(SubjectBase):
     students: Optional[List[Tuple[str,int]]]
-    teachers: Optional[List[Tuple[str]]]
+    teachers: Optional[List[str]]
