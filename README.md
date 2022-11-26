@@ -5,15 +5,15 @@ DANG Méline et VAN ROOIJ Théo
 
 # Comment lancer le projet ? 
 Pour lancer notre projet il vous suffit de :
-- lancer votre Docker ;
+- lancer Docker ;
 - aller dans votre Terminal et vous placer dans le dossier de notre projet ;
 - lancer un "docker-compose up -d" depuis le Terminal ;
-- vous rendre sur un navigateur et rendez-vous sur la page "http://localhost:8050/".
+- ouvrir un navigateur, et rendez-vous sur la page "http://localhost:8050/".
 
 
 # Pourquoi ce projet, et comment fonctionne-t-il ?
 Notre projet vise à réaliser une plateforme de vie scolaire pour les écoles.
-Il est possible d'accéder à quatre pages par notre barre de navigation :
+Il est possible d'accéder à quatre pages principales depuis notre barre de navigation :
 - la page d'accueil, là où nous expliquons d'accueil brièvement le but de notre projet ;
 - la page élèves, c'est ici que se regroupe tous les élèves comtenus dans notre database ;
 - la page professeurs, c'est ici que se regroupe tous les professeurs de notre database ;
@@ -33,7 +33,7 @@ Pour inscrire les élèves à plusieurs matières, il faut maintenir la touche C
 Nous pouvons gérer les élèves à partir de cette page, c'est-à-dire : voir la page détaillée des élèves, modifier leurs informations si besoin, ou bien même supprimer des élèves depuis la colonne "Actions", respectivement par les boutons "Détails", "Modifier" et "Supprimer".
 
 ### Page d'un élève spécifique
-Il est possible de cliquer sur le bouton "Détails" de la Page Elèves, ou bien sur le nom ou prénom d'un élève en particulier (directemenet depuis la table de la Page Elèves), pour accéder à sa page élève spécifique dans laquelle nous pouvons voir :
+Il est possible de cliquer sur le bouton "Détails" de la Page Elèves, ou bien sur le nom ou prénom d'un élève en particulier (directement depuis la table de la Page Elèves), pour accéder à sa page élève spécifique dans laquelle nous pouvons voir :
 - nom et prénom de l'élève ;
 - niveau scolaire et classe de l'élève ;
 - date de naissance de l'élève ;
@@ -52,7 +52,7 @@ Pour associer les professeurs à plusieurs matières, il faut maintenir la touch
 Nous pouvons gérer les professeurs à partir de cette page, c'est-à-dire : voir la page détaillée des professeurs, modifier leurs informations si besoin, ou bien même supprimer des professeurs depuis la colonne "Actions", respectivement par les boutons "Détails", "Modifier" et "Supprimer".
 
 ### Page d'un professeur spécifique
-Il est possible de cliquer sur le bouton "Détails" de la Page Professeurs, ou bien sur le nom ou prénom d'un professeur en particulier (directemenet depuis la table de la Page Professeurs), pour accéder à sa page professeur spécifique dans laquelle nous pouvons voir :
+Il est possible de cliquer sur le bouton "Détails" de la Page Professeurs, ou bien sur le nom ou prénom d'un professeur en particulier (directement depuis la table de la Page Professeurs), pour accéder à sa page professeur spécifique dans laquelle nous pouvons voir :
 - nom et prénom du professeur ;
 - niveau scolaire et classe du professeur;
 - date de naissance du professeur ;
