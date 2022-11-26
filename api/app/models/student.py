@@ -5,11 +5,6 @@ from .database import BaseSQL
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.orm import relationship
 
-# StudentSubjectRelation = Table('studentsubjectrelation', BaseSQL.metadata,
-#     Column('student_id', UUID(as_uuid=True), ForeignKey('student.id',onupdate="CASCADE",ondelete="CASCADE")),
-#     Column('subject_id', UUID(as_uuid=True), ForeignKey('subject.id',onupdate="CASCADE",ondelete="CASCADE"))
-# )
-
 class StudentSubject(BaseSQL):
     __tablename__ ='studentsubject'
     student_id = Column(ForeignKey('student.id',onupdate="CASCADE",ondelete="CASCADE"), primary_key=True)
