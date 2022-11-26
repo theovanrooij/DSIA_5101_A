@@ -26,6 +26,7 @@ def studentDetail(studentID):
     response  = requests.get(app.config['API_URL']+"/students/"+studentID)
     return render_template("student-detail.html",student=response.json())
 
+
 @app.route('/add-student')
 def addStudent():
 

@@ -61,6 +61,7 @@
                 <td class="p-2 border-r">{{teacher["family_name"]}}</td>
                 <td class="p-2 border-r">{{teacher["first_name"]}}</td>
                 <td>
+                    <a href="/teacher/{{teacher['id']}}" class="bg-amber-500 p-2 text-white hover:shadow-lg text-xs font-thin">Détails</a>
                     <a href="/subjects/remove-teacher/{{subject['id']}}/{{teacher['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Désinscrire</a>
                 </td>
             </tr>
@@ -131,6 +132,7 @@
                     
                </td>
                 <td>
+                    <a href="/student/{{student['id']}}" class="bg-amber-500 p-2 text-white hover:shadow-lg text-xs font-thin">Détails</a>
                     <a href="/subjects/remove-student/{{subject['id']}}/{{student['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Désinscrire</a>
                 </td>
             </tr>

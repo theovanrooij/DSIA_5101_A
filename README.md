@@ -1,4 +1,13 @@
 # DSIA_5101_A
+E5 DSIA
+DANG Méline et VAN ROOIJ Théo
+
+
+Pour lancer notre projet il vous suffit de :
+- lancer votre Docker ;
+- aller dans votre Terminal et vous placer dans le dossier de notre projet ;
+- lancer un "docker-compose up -d" depuis le Terminal ;
+- vous rendre sur un navigateur et aller sur la page "http://localhost:8050/".
 
 
 Notre projet vise à réaliser une plateforme de vie scolaire pour les écoles.

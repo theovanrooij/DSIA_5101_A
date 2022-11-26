@@ -82,7 +82,22 @@
             <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
                 <td class="p-2 border-r">{{subject["code_subject"]}}</td>
                 <td class="p-2 border-r">{{subject["name_subject"]}}</td>
-                <td class="p-2 border-r">{{subject["note"]}}</td>
+                <td class="p-2 border-r relative w-50" >
+                    <div class="display-note-container">
+                        {{subject["note"]}}
+                        <svg class="absolute top-2 right-0 h-5 edit-note-button" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                        </svg>
+                    </div>
+                    <!-- <div class="edit-note-container relative" style="display: none;">
+                        <input type="number" class="edit-note-input" value="{{subject['note']}}" name="note" class="edit-note-input w-50 px-3 py-1 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md sm:text-sm focus:ring-1" >
+                        <svg class="absolute top-2 right-0 h-5 submit-note-button" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                          
+                    </div> -->
+                    
+               </td>
                 <td>
                     <a href="/student/remove-subject/{{student['id']}}/{{subject['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Désinscrire</a>
                 </td>
@@ -92,6 +107,25 @@
     </table>
 </div>
 
+
+<!-- <script>
+    let subjects = document.querySelectorAll(".subject-tr")
+    console.log(subjects)
+    subjects.forEach(subject => {
+        subject.querySelector(".edit-note-button").addEventListener("click", () => {
+            subject.querySelector(".display-note-container").style.display = "none"
+            subject.querySelector(".edit-note-container").style.display = "block"
+        })
+
+        subject.querySelector(".submit-note-button").addEventListener("click", () => {
+            let subjectID = subject.id
+            let note = subject.querySelector(".edit-note-input").value
+            console.log(subjectID,note)
+            location.href = "/students/edit-note/{{student['id']}}/"+subjectID+"/"+note
+        })
+
+    });
+</script> -->
 
 {% endblock %}
 

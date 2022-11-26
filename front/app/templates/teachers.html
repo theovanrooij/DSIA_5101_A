@@ -71,6 +71,7 @@
                     {{item["code_subject"]}} - {{item["name_subject"]}} |
                 {% endfor %}</td>
                 <td>
+                    <a href="/teacher/{{teacher['id']}}" class="bg-amber-500 p-2 text-white hover:shadow-lg text-xs font-thin">Détails</a>
                     <a href="/edit-teacher/{{teacher['id']}}" class="bg-blue-500 p-2 text-white hover:shadow-lg text-xs font-thin">Modifier</a>
                     <a href="/delete-teacher/{{teacher['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Supprimer</a>
                 </td>
