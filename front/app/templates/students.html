@@ -7,7 +7,7 @@
 
 <!-- Pin to top right corner -->
 <div class="relative h-10 w-100 flex justify-end right-2">
-    <a href="/add-student" class="bg-green-500 p-2 text-white hover:shadow-lg text-xs font-thin">Ajouter un élève</a>
+    <a href="/add-student" class="bg-green-400 p-2 text-white hover:shadow-lg text-xs font-thin">Ajouter un élève</a>
 </div>
 
 <!-- component -->
@@ -90,9 +90,9 @@
                     {{item["code_subject"]}} - {{item["name_subject"]}} |
                 {% endfor %}</td>
                 <td>
-                    <a href="/student/{{student['id']}}" class="bg-amber-500 p-2 text-white hover:shadow-lg text-xs font-thin">Détails</a>
-                    <a href="/edit-student/{{student['id']}}" class="bg-blue-500 p-2 text-white hover:shadow-lg text-xs font-thin">Modifier</a>
-                    <a href="/delete-student/{{student['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Supprimer</a>
+                    <a href="/student/{{student['id']}}" class="bg-amber-400 p-2 text-white hover:shadow-lg text-xs font-thin">Détails</a>
+                    <a href="/edit-student/{{student['id']}}" class="bg-sky-500 p-2 text-white hover:shadow-lg text-xs font-thin">Modifier</a>
+                    <a href="/delete-student/{{student['id']}}" class="bg-rose-500 p-2 text-white hover:shadow-lg text-xs font-thin">Supprimer</a>
                 </td>
             </tr>
         

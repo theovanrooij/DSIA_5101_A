@@ -24,7 +24,7 @@
     </div>
     <!-- Pin to top right corner -->
     <!-- <div class="relative h-8 w-100 flex justify-end right-2"> -->
-        <a href="/edit-teacher/{{teacher['id']}}" class="h-8 bg-green-500 p-2 text-white hover:shadow-lg text-xs font-thin">Modifier le/la professeur</a>
+        <a href="/edit-teacher/{{teacher['id']}}" class="h-8 bg-green-400 p-2 text-white hover:shadow-lg text-xs font-thin">Modifier le/la professeur</a>
     <!-- </div> -->
 </div>
 
@@ -68,7 +68,8 @@
                 <td class="p-2 border-r">{{subject["code_subject"]}}</td>
                 <td class="p-2 border-r">{{subject["name_subject"]}}</td>
                 <td>
-                    <a href="/teacher/remove-subject/{{teacher['id']}}/{{subject['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Désinscrire</a>
+                    <a href="/subject/{{subject['id']}}" class="bg-amber-400 p-2 text-white hover:shadow-lg text-xs font-thin">Détails</a>
+                    <a href="/teacher/remove-subject/{{teacher['id']}}/{{subject['id']}}" class="bg-rose-500 p-2 text-white hover:shadow-lg text-xs font-thin">Désinscrire</a>
                 </td>
             </tr>
             {% endfor %}
