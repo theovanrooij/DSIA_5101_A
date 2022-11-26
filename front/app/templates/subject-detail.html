@@ -17,7 +17,7 @@
     </div>
     <!-- Pin to top right corner -->
     <!-- <div class="relative h-8 w-100 flex justify-end right-2"> -->
-        <a href="/edit-subject/{{subject['id']}}" class="h-8 bg-green-500 p-2 text-white hover:shadow-lg text-xs font-thin">Modifier la matière/unité</a>
+        <a href="/edit-subject/{{subject['id']}}" class="h-8 bg-green-400 p-2 text-white hover:shadow-lg text-xs font-thin">Modifier la matière/unité</a>
     <!-- </div> -->
 </div>
 
@@ -61,7 +61,8 @@
                 <td class="p-2 border-r">{{teacher["family_name"]}}</td>
                 <td class="p-2 border-r">{{teacher["first_name"]}}</td>
                 <td>
-                    <a href="/subjects/remove-teacher/{{subject['id']}}/{{teacher['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Désinscrire</a>
+                    <a href="/teacher/{{teacher['id']}}" class="bg-amber-400 p-2 text-white hover:shadow-lg text-xs font-thin">Détails</a>
+                    <a href="/subjects/remove-teacher/{{subject['id']}}/{{teacher['id']}}" class="bg-rose-500 p-2 text-white hover:shadow-lg text-xs font-thin">Désinscrire</a>
                 </td>
             </tr>
             {% endfor %}
@@ -70,7 +71,7 @@
 </div>
 <!-- component -->
 <div class="table w-full p-2">
-    <br><h3>Liste des élèves assignés au cours :</h3><br>
+    <br><h3>Liste des élèves inscrits au cours :</h3><br>
     <table class="w-full border">
         <thead>
             <tr class="bg-gray-50 border-b">
@@ -131,7 +132,8 @@
                     
                </td>
                 <td>
-                    <a href="/subjects/remove-student/{{subject['id']}}/{{student['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Désinscrire</a>
+                    <a href="/student/{{student['id']}}" class="bg-amber-400 p-2 text-white hover:shadow-lg text-xs font-thin">Détails</a>
+                    <a href="/subjects/remove-student/{{subject['id']}}/{{student['id']}}" class="bg-rose-500 p-2 text-white hover:shadow-lg text-xs font-thin">Désinscrire</a>
                 </td>
             </tr>
             {% endfor %}

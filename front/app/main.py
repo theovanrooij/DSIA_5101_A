@@ -12,6 +12,7 @@ def root():
     return render_template("accueil.html",text=requests.get(app.config['API_URL']).text)
 
 
+
 ## Students 
 
 @app.route('/students')
@@ -19,12 +20,14 @@ def students():
     response  = requests.get(app.config['API_URL']+"/students")
     return render_template("students.html",students=response.json())
 
+
 @app.route('/student/<studentID>')
 def studentDetail(studentID):
     response  = requests.get(app.config['API_URL']+"/students/"+studentID)
     if response.status_code != 200 :
         abort(response.status_code)
     return render_template("student-detail.html",student=response.json())
+
 
 @app.route('/add-student')
 def addStudent():
@@ -39,7 +42,6 @@ def addStudent():
 
 @app.route('/add-student-api', methods= ['POST'])
 def addStudentApi():
-
     formData = request.form.to_dict(flat=False)
     new_student = dict()
     for var,value in formData.items() : 
@@ -77,14 +79,13 @@ def removeStudentSubject(studentID,subjectID):
     return redirect("/student/"+studentID)
 
 
-
-
 @app.route('/delete-student/<studentID>', methods= ['GET'])
 def deleteStudentApi(studentID):
     response  = requests.delete(app.config['API_URL']+"/students/"+studentID)
     if response.status_code != 200 :
         abort(response.status_code)
     return redirect("/students")
+
 
 @app.route('/edit-student/<studentID>', methods= ['GET'])
 def updateStudent(studentID):
@@ -101,6 +102,7 @@ def updateStudent(studentID):
     form = studentForm(obj=student)
     return render_template("edit-student.html",form=form,student=student,all_subjects=all_subjects_data)
 
+
 @app.route('/edit-student-api/<studentID>', methods= ['POST','GET'])
 def editStudentApi(studentID):
     formData = request.form.to_dict(flat=False)
@@ -108,7 +110,6 @@ def editStudentApi(studentID):
     for var,value in formData.items() : 
         new_student[var] = value[0]
     new_subjects = list()
-
     subjectsForm = formData.get("subjects")
     if subjectsForm :
         for subject in  subjectsForm: 
@@ -123,6 +124,7 @@ def editStudentApi(studentID):
     return redirect("/students")
 
 
+
 ## Teachers 
 
 @app.route('/teachers')
@@ -131,6 +133,7 @@ def teachers():
     if response.status_code != 200 :
         abort(response.status_code)
     return render_template("teachers.html",teachers=response.json())
+
 
 @app.route('/teacher/<teacherID>')
 def teacherDetail(teacherID):
@@ -142,7 +145,6 @@ def teacherDetail(teacherID):
 
 @app.route('/add-teacher')
 def addTeacher():
-
     form = teacherForm()
     all_subjects  = requests.get(app.config['API_URL']+"/subjects")
 
@@ -152,15 +154,14 @@ def addTeacher():
         all_subjects_data = []
     return render_template("add-teacher.html",form=form, all_subjects=all_subjects_data)
 
+
 @app.route('/add-teacher-api', methods= ['POST','GET'])
 def addTeacherApi():
-
     formData = request.form.to_dict(flat=False)
     new_teacher = dict()
     for var,value in formData.items() : 
         new_teacher[var] = value[0]
     new_teacher["subjects"] = formData.get("subjects")
-
     response  = requests.post(app.config['API_URL']+"/teachers",json=new_teacher)
     if response.status_code != 200 :
         abort(response.status_code)
@@ -185,10 +186,8 @@ def removeTeacherSubject(teacherID,subjectID):
     return redirect("/teacher/"+teacherID)
 
 
-
 @app.route('/delete-teacher/<teacherID>', methods= ['GET'])
 def deleteTeacherApi(teacherID):
-
     response  = requests.delete(app.config['API_URL']+"/teachers/"+teacherID)
     if response.status_code != 200 :
         abort(response.status_code)
@@ -197,7 +196,6 @@ def deleteTeacherApi(teacherID):
 
 @app.route('/edit-teacher/<teacherID>', methods= ['GET'])
 def updateTeacher(teacherID):
-
     response  = requests.get(app.config['API_URL']+"/teachers/"+teacherID)
     if response.status_code != 200 :
         abort(response.status_code)
@@ -206,9 +204,9 @@ def updateTeacher(teacherID):
     form = teacherForm(obj=teacher)
     return render_template("edit-teacher.html",form=form,teacher=teacher,all_subjects=all_subjects.json())
 
+
 @app.route('/edit-teacher-api/<teacherID>', methods= ['POST','GET'])
 def editTeacherApi(teacherID):
-    
     formData = request.form.to_dict(flat=False)
     new_teacher = dict()
     for var,value in formData.items() : 
@@ -219,6 +217,7 @@ def editTeacherApi(teacherID):
     if response.status_code != 200 :
         abort(response.status_code)
     return redirect("/teachers")
+
 
 
 ## Matières/Unités
@@ -239,10 +238,12 @@ def subjectDetail(subjectID):
         abort(response.status_code)
     return render_template("subject-detail.html", subject=response.json())
 
+
 @app.route('/add-subject')
 def addSubject():
     form = subjectForm()
     return render_template("add-subject.html",form=form)
+
 
 @app.route('/add-subject-api', methods= ['GET'])
 def addSubjectApi():
@@ -252,12 +253,14 @@ def addSubjectApi():
         abort(response.status_code)
     return redirect("/subjects")
 
+
 @app.route('/delete-subject/<subjectID>', methods= ['GET'])
 def deleteSubjectApi(subjectID):
     response  = requests.delete(app.config['API_URL']+"/subjects/"+subjectID)
     if response.status_code != 200 :
         abort(response.status_code)
     return redirect("/subjects")
+
 
 @app.route('/edit-subject/<subjectID>', methods= ['GET'])
 def updateSubject(subjectID):
@@ -268,9 +271,9 @@ def updateSubject(subjectID):
     form = subjectForm(obj=subject)
     return render_template("edit-subject.html",form=form,subject=subject)
 
+
 @app.route('/edit-subject-api/<subjectID>', methods= ['GET'])
 def editSubjectApi(subjectID):
-    # return request.args
     formData = request.args.to_dict()
     new_subject = dict()
     for var,value in formData.items() : 
@@ -281,9 +284,9 @@ def editSubjectApi(subjectID):
         abort(response.status_code)
     return redirect("/subjects")
 
+
 @app.route('/subjects/remove-teacher/<subjectID>/<teacherID>', methods= ['POST','GET'])
 def removeSubjectTeacher(subjectID,teacherID):
-
     subject =  requests.get(app.config['API_URL']+"/subjects/"+subjectID)
     if subject.status_code != 200 :
         abort(subject.status_code)
@@ -294,7 +297,6 @@ def removeSubjectTeacher(subjectID,teacherID):
         for teacher in teachers :
             if not teacher.get("id") == teacherID :
                 subject["teachers"].append(teacher["id"])
-
     students = subject.get("students")
     subject["students"] = []
     if students :
@@ -308,9 +310,9 @@ def removeSubjectTeacher(subjectID,teacherID):
         abort(response.status_code)
     return redirect("/subject/"+subjectID)
 
+
 @app.route('/subjects/remove-student/<subjectID>/<studentID>', methods= ['POST','GET'])
 def removeSubjectStudent(subjectID,studentID):
-
     subject =  requests.get(app.config['API_URL']+"/subjects/"+subjectID)
     if subject.status_code != 200 :
         abort(subject.status_code)
@@ -320,7 +322,6 @@ def removeSubjectStudent(subjectID,studentID):
     if teachers :
         for teacher in teachers :
             subject["teachers"].append(teacher["id"])
-
     students = subject.get("students")
     subject["students"] = []
     for student in students :
@@ -335,9 +336,7 @@ def removeSubjectStudent(subjectID,studentID):
     return redirect("/subject/"+subjectID)
 
 
-@app.route('/subjects/edit-note/<subjectID>/<studentID>/<noteValue>', methods= ['POST','GET'])
-def editNoteSubject(subjectID,studentID,noteValue):
-
+def changeNote(subjectID,studentID,noteValue):
     subject =  requests.get(app.config['API_URL']+"/subjects/"+subjectID)
     subject = subject.json()
     teachers = subject.get("teachers")
@@ -345,10 +344,8 @@ def editNoteSubject(subjectID,studentID,noteValue):
     if teachers :
         for teacher in teachers :
             subject["teachers"].append(teacher["id"])
-
     students = subject.get("students")
     subject["students"] = []
-
     for student in students :
         if not student.get("id") == studentID :
             note = student["note"]
@@ -358,7 +355,20 @@ def editNoteSubject(subjectID,studentID,noteValue):
         else :
             subject["students"].append([student["id"],int(noteValue)])
     response  = requests.put(app.config['API_URL']+"/subjects/"+subjectID,json=subject)
+    return response
+
+
+@app.route('/subjects/edit-note/<subjectID>/<studentID>/<noteValue>', methods= ['POST','GET'])
+def editNoteSubject(subjectID,studentID,noteValue):
+    response = changeNote(subjectID,studentID,noteValue)
     return redirect("/subject/"+subjectID)
+
+
+@app.route('/students/edit-note/<subjectID>/<studentID>/<noteValue>', methods= ['POST','GET'])
+def editNoteStudent(subjectID,studentID,noteValue):
+    response = changeNote(subjectID,studentID,noteValue)
+    return redirect("/student/"+studentID)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -371,7 +381,6 @@ def ressource_exist(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template("500.html")
-
 
 
 if __name__ == '__main__':
