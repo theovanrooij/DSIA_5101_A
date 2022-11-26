@@ -13,6 +13,10 @@ def get_all_subjects(db: Session, skip: int = 0, limit: int = 200) -> List[model
         record.id = str(record.id)
         for student in record.students:
             student.student_id = str(student.student_id)
+        for teacher in record.teachers:
+            teacher.id = str(teacher.id)
+
+
     return db_subject
 
 def get_subject_by_id(subject_id: str, db: Session) -> models.Subject:
@@ -22,6 +26,8 @@ def get_subject_by_id(subject_id: str, db: Session) -> models.Subject:
     record.id = str(record.id)
     for student in record.students:
             student.student_id = str(student.student_id)
+    for teacher in record.teachers:
+        teacher.id = str(teacher.id)            
     return record
 
 def get_subject_students_by_id(subject_id: str, db: Session) -> models.Subject:
@@ -31,6 +37,8 @@ def get_subject_students_by_id(subject_id: str, db: Session) -> models.Subject:
     record.id = str(record.id)
     for student in record.students:
             student.student_id = str(student.student_id)
+    for teacher in record.teachers:
+        teacher.id = str(teacher.id)
     return record
 
 def create_subject(db: Session, subject: schemas.SubjectInsert) -> models.Subject:
