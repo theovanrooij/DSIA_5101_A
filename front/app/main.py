@@ -41,8 +41,10 @@ def addStudentApi():
     for var,value in formData.items() : 
         new_student[var] = value[0]
     new_student["subjects"] = []
-    for student in formData.get("subjects") : 
-        new_student["subjects"].append([student,-1])
+    subjects=formData.get("subjects")
+    if subjects :
+        for subject in  subjects: 
+            new_student["subjects"].append([subject,-1])
     response  = requests.post(app.config['API_URL']+"/students",json=new_student)
     return redirect("/students")
 
@@ -198,7 +200,8 @@ def addSubjectApi():
     jsonDict = dict(request.args)
     response  = requests.post(app.config['API_URL']+"/subjects",json=jsonDict)
 
-    # return jsonDict 
+    return jsonDict
+    # return response.content 
     return redirect("/subjects")
 
 @app.route('/delete-subject/<subjectID>', methods= ['GET'])

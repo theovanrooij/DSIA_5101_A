@@ -28,6 +28,7 @@ def get_subject_by_id(subject_id: str, db: Session) -> models.Subject:
 def create_subject(db: Session, subject: schemas.SubjectInsert) -> models.Subject:
 
     from .students import get_student_by_id
+    from .teachers import get_teacher_by_id
     record = db.query(models.Subject).filter(models.Subject.id == subject.id).first()
     if record:
         raise HTTPException(status_code=409, detail="Already exists")
@@ -35,11 +36,19 @@ def create_subject(db: Session, subject: schemas.SubjectInsert) -> models.Subjec
     subject_dict = subject.dict()
     students = subject_dict.pop("students")
     note = subject_dict.pop("note")
+    teachers = subject_dict.pop("teachers")
+
+
     db_subject = models.Subject(**subject_dict)
 
+    if teachers :
+        for teacher in teachers: 
+            db_subject.teachers.append(get_teacher_by_id(teacher,db))
+            
     db.add(db_subject)
     db.commit()
     db.refresh(db_subject)
+
     relation_list = list()
     if students :
         for student in  students: 
