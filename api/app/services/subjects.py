@@ -44,7 +44,7 @@ def create_subject(db: Session, subject: schemas.SubjectInsert) -> models.Subjec
     if teachers :
         for teacher in teachers: 
             db_subject.teachers.append(get_teacher_by_id(teacher,db))
-            
+
     db.add(db_subject)
     db.commit()
     db.refresh(db_subject)
