@@ -90,6 +90,14 @@
                         </svg>
                     </div>
                 </th>
+                <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
+                    <div class="flex items-center justify-center">
+                        Note
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                        </svg>
+                    </div>
+                </th>
                
                 <th class="p-2 border-r cursor-pointer text-sm font-thin text-gray-500">
                     <div class="flex items-center justify-center">
@@ -103,9 +111,25 @@
         </thead>
         <tbody>
             {% for student in subject["students"] %}
-            <tr class="bg-gray-100 text-center border-b text-sm text-gray-600">
+            <tr class="bg-gray-100 text-center border-b text-sm text-gray-600 student-tr" id="{{student['id']}}">
                 <td class="p-2 border-r">{{student["family_name"]}}</td>
                 <td class="p-2 border-r">{{student["first_name"]}}</td>
+                <td class="p-2 border-r relative w-50" >
+                    <div class="display-note-container">
+                        {{student["note"]}}
+                        <svg class="absolute top-2 right-0 h-5 edit-note-button" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                        </svg>
+                    </div>
+                    <div class="edit-note-container relative" style="display: none;">
+                        <input type="number" class="edit-note-input" value="{{student['note']}}" name="note" class="edit-note-input w-50 px-3 py-1 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md sm:text-sm focus:ring-1" >
+                        <svg class="absolute top-2 right-0 h-5 submit-note-button" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                          
+                    </div>
+                    
+               </td>
                 <td>
                     <a href="/subjects/remove-student/{{subject['id']}}/{{student['id']}}" class="bg-red-500 p-2 text-white hover:shadow-lg text-xs font-thin">Désinscrire</a>
                 </td>
@@ -116,6 +140,24 @@
 </div>
 
 
+<script>
+    let students = document.querySelectorAll(".student-tr")
+    console.log(students)
+    students.forEach(student => {
+        student.querySelector(".edit-note-button").addEventListener("click", () => {
+            student.querySelector(".display-note-container").style.display = "none"
+            student.querySelector(".edit-note-container").style.display = "block"
+        })
+
+        student.querySelector(".submit-note-button").addEventListener("click", () => {
+            let studentID = student.id
+            let note = student.querySelector(".edit-note-input").value
+            console.log(studentID,note)
+            location.href = "/subjects/edit-note/{{subject['id']}}/"+studentID+"/"+note
+        })
+
+    });
+</script>
 {% endblock %}
 
 

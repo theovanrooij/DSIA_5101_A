@@ -274,6 +274,32 @@ def removeSubjectStudent(subjectID,studentID):
     # return response.content
     return redirect("/subject/"+subjectID)
 
+
+@app.route('/subjects/edit-note/<subjectID>/<studentID>/<noteValue>', methods= ['POST','GET'])
+def editNoteSubject(subjectID,studentID,noteValue):
+
+    subject =  requests.get(app.config['API_URL']+"/subjects/"+subjectID)
+    subject = subject.json()
+    teachers = subject.get("teachers")
+    subject["teachers"] = []
+    if teachers :
+        for teacher in teachers :
+            subject["teachers"].append(teacher["id"])
+
+    students = subject.get("students")
+    subject["students"] = []
+
+    for student in students :
+        if not student.get("id") == studentID :
+            note = student["note"]
+            if not note : 
+                note=-1
+            subject["students"].append([student["id"],note])
+        else :
+            subject["students"].append([student["id"],int(noteValue)])
+    response  = requests.put(app.config['API_URL']+"/subjects/"+subjectID,json=subject)
+    return redirect("/subject/"+subjectID)
+
 @app.errorhandler(404)
 def page_not_found(e):
     return redirect("/")
