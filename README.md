@@ -77,11 +77,11 @@ Nous pouvons aussi modifier directement la matière/unité en cliquant sur le bo
 
 
 # Explications des routers
-
+Pour cette partie nous avons essayé d'utiliser le swagger fourni par FastApi. Malheureusement nos schemas utilisant des Tuple, OpenAPI n'est pas capable de générer le swagger associé. Nous avons ainsi décidé de conserver la structure actuelle et d'expliquer les différentes routes ci-dessous.
 
 ## student
 
-### POST, /subjects : Permet de créer un élève en utilisant les réponses soumises au form student pour avoir les données nécessaires à sa création. Les matières que nous pouvons assigner à l'élève sont recherchées à partir de celles stockées dans les matières de la database. Ajoute le nouvel élève à la database. Si l'élève est déjà repertorié dans la database, nous retournons une erreur 409.
+*  POST, /subjects : Permet de créer un élève en utilisant les réponses soumises au form student pour avoir les données nécessaires à sa création. Les matières que nous pouvons assigner à l'élève sont recherchées à partir de celles stockées dans les matières de la database. Ajoute le nouvel élève à la database. Si l'élève est déjà repertorié dans la database, nous retournons une erreur 409.
 
 Exemple de requête : 
 
@@ -103,11 +103,11 @@ Les subjects sont optionnels.
 
 La note vaut -1 si aucune n'est assignée.
 
-### GET, /subjects : permet de récuperer tous les élèves présents dans la database.
+* GET, /subjects : permet de récuperer tous les élèves présents dans la database.
 
-### GET, /subjects/<subjectID> : permet de récuperer un élève grâce à son ID unique, précisé dans l'URL. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
+* GET, /subjects/<subjectID> : permet de récuperer un élève grâce à son ID unique, précisé dans l'URL. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
 
-### PUT, /subjects/<subjectID> : permet de modifier un élève grâce à son ID unique, précisé dans l'URL, et en ouvrant le form conçu pour récuperer les informations d'un élève.
+* PUT, /subjects/<subjectID> : permet de modifier un élève grâce à son ID unique, précisé dans l'URL, et en ouvrant le form conçu pour récuperer les informations d'un élève.
 
 Exemple de requête : 
 
@@ -135,9 +135,9 @@ La note vaut -1 si aucune n'est assignée.
 ### DELETE, /subjects : permet de supprimer tous les élèves de la database.
 
 
-## teacher
+## Teacher
 
-### POST, /teachers : permet de créer un professeur en utilisant les réponses soumises au form teacher pour avoir les données nécessaires à sa création. Les matières que nous pouvons assigner au professeur sont recherchées à partir de celles stockées dans les matières de la database. Ajoute le nouvel professeur à la database. Si le professeur est déjà repertorié dans la database, nous retournons une erreur 409.
+* POST, /teachers : permet de créer un professeur en utilisant les réponses soumises au form teacher pour avoir les données nécessaires à sa création. Les matières que nous pouvons assigner au professeur sont recherchées à partir de celles stockées dans les matières de la database. Ajoute le nouvel professeur à la database. Si le professeur est déjà repertorié dans la database, nous retournons une erreur 409.
 
 Exemple de requête : 
 
@@ -155,11 +155,11 @@ Exemple de requête :
 ```
 Les subjects sont optionnels.
 
-### GET, /teachers : permet de récuperer tous les professeurs présents dans la database.
+* GET, /teachers : permet de récuperer tous les professeurs présents dans la database.
 
-### GET, /teachers/<teacherID> : permet de récuperer un professeur grâce à son ID unique, précisé dans l'URL. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
+* GET, /teachers/<teacherID> : permet de récuperer un professeur grâce à son ID unique, précisé dans l'URL. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
 
-### PUT, /teachers/<teacherID> : permet de modifier un professeur grâce à son ID unique, précisé dans l'URL, et en ouvrant le form conçu pour récuperer les informations d'un professeur.
+* PUT, /teachers/<teacherID> : permet de modifier un professeur grâce à son ID unique, précisé dans l'URL, et en ouvrant le form conçu pour récuperer les informations d'un professeur.
 
 Exemple de requête : 
 
@@ -178,14 +178,14 @@ Exemple de requête :
 ```
 Les subjects sont optionnels.
 
-### DELETE, /teachers/<teacherID> : permet de supprimer un professeur grâce à son ID unique, précisé dans l'URL.
+* DELETE, /teachers/<teacherID> : permet de supprimer un professeur grâce à son ID unique, précisé dans l'URL.
 
-### DELETE, /teachers : permet de supprimer tous les professeurs de la database.
+* DELETE, /teachers : permet de supprimer tous les professeurs de la database.
 
 
-## subject
+## Subject
 
-### POST, /subjects : permet de créer une matière en utilisant les réponses soumises au form subject pour avoir les données nécessaires à sa création. Si la matière est déjà repertoriée dans la database, nous retournons une erreur 409.
+* POST, /subjects : permet de créer une matière en utilisant les réponses soumises au form subject pour avoir les données nécessaires à sa création. Si la matière est déjà repertoriée dans la database, nous retournons une erreur 409.
 
 Exemple de requête : 
 
@@ -209,11 +209,11 @@ Exemple de requête :
 Les students et teachers sont optionnels.
 
 
-### GET, /subjects : permet de récuperer toutes les matières présentes dans la database.
+* GET, /subjects : permet de récuperer toutes les matières présentes dans la database.
 
-### GET, /subjects/<subjectID> : permet de récuperer une matière grâce à son ID unique, précisé dans l'URL. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
+* GET, /subjects/<subjectID> : permet de récuperer une matière grâce à son ID unique, précisé dans l'URL. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
 
-### PUT, /subjects/<subjectID> : permet de modifier un élève grâce à son ID unique, précisé dans l'URL, et en ouvrant le form conçu pour récuperer les informations d'un élève.
+* PUT, /subjects/<subjectID> : permet de modifier un élève grâce à son ID unique, précisé dans l'URL, et en ouvrant le form conçu pour récuperer les informations d'un élève.
 
 Exemple de requête : 
 
@@ -237,6 +237,6 @@ Exemple de requête :
 ```
 Les students et teachers sont optionnels.
 
-### DELETE, /subjects/<subjectID> : permet de supprimer un élève grâce à son ID unique, précisé dans l'URL.
+* DELETE, /subjects/<subjectID> : permet de supprimer un élève grâce à son ID unique, précisé dans l'URL.
 
-### DELETE, /subjects : permet de supprimer toutes les matières de la database.
+* DELETE, /subjects : permet de supprimer toutes les matières de la database.
