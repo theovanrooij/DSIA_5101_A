@@ -89,7 +89,7 @@ Exemple de requête :
 {
  "family_name" : "Nom_1",
  "first_name" : "Prenom_1",
- "birth_date":datetime,
+ "birth_date": datetime,
  "academic_level":"E5",
  "class_student":"DSIA",
  "subjects": [ 
@@ -209,7 +209,7 @@ Exemple de requête :
 Les students et teachers sont optionnels.
 
 
-### GET, /subjects : permet de récuperer toutes les matières présents dans la database.
+### GET, /subjects : permet de récuperer toutes les matières présentes dans la database.
 
 ### GET, /subjects/<subjectID> : permet de récuperer une matière grâce à son ID unique, précisé dans l'URL. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
 
