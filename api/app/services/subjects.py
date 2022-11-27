@@ -15,15 +15,15 @@ def get_all_subjects(db: Session, skip: int = 0, limit: int = 200) -> List[model
             student.student_id = str(student.student_id)
         for teacher in record.teachers:
             teacher.id = str(teacher.id)
-
-
     return db_subject
+
 
 def get_subject_by_id(subject_id: str, db: Session) -> models.Subject:
     record = db.query(models.Subject).options(joinedload(models.Subject.students)).filter(models.Subject.id == subject_id).first()
     if not record:
         raise HTTPException(status_code=404, detail="Not Found")         
     return record
+
 
 def create_subject(db: Session, subject: schemas.SubjectInsert) -> models.Subject:
 
@@ -37,8 +37,6 @@ def create_subject(db: Session, subject: schemas.SubjectInsert) -> models.Subjec
     students = subject_dict.pop("students")
     note = subject_dict.pop("note")
     teachers = subject_dict.pop("teachers")
-
-
     db_subject = models.Subject(**subject_dict)
 
     if teachers :
@@ -62,8 +60,8 @@ def create_subject(db: Session, subject: schemas.SubjectInsert) -> models.Subjec
     db.commit()
     db.refresh(db_subject)
     db_subject.id = str(db_subject.id)
-
     return db_subject
+
 
 def update_subject(subject_id: str, db: Session, subject: schemas.SubjectInsert) -> models.Subject:
     from .students import get_student_by_id 
@@ -111,7 +109,7 @@ def update_subject(subject_id: str, db: Session, subject: schemas.SubjectInsert)
         
     return db_subject
 
-
+ 
 def delete_subject(subject_id: str, db: Session) -> models.Subject:
     db_subject = get_subject_by_id(subject_id=subject_id, db=db)
 

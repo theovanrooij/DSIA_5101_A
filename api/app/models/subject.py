@@ -2,8 +2,8 @@ from sqlalchemy import Column, String, DateTime
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship,backref
 from .database import BaseSQL
-# from .student import StudentSubjectRelation
 from .teacher import TeacherSubjectRelation
+
 
 class Subject(BaseSQL):
     __tablename__ = "subject"
@@ -18,4 +18,3 @@ class Subject(BaseSQL):
 
     def as_dict(self):
        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-

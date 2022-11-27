@@ -14,6 +14,7 @@ def get_all_students(db: Session, skip: int = 0, limit: int = 200) -> List[model
             subject.subject_id = str(subject.subject_id)
     return records
 
+
 def get_student_by_id(student_id: str, db: Session) -> models.Student:
     record = db.query(models.Student).options(joinedload(models.Student.subjects)).filter(models.Student.id == student_id).first()
     if not record:
@@ -23,12 +24,14 @@ def get_student_by_id(student_id: str, db: Session) -> models.Student:
         subject.subject_id = str(subject.subject_id)
     return record
 
+
 def get_student_subjects_by_id(student_id: str, db: Session) -> schemas.StudentWithSubjects:
     record = db.query(models.Student).options(joinedload(models.Student.subjects)).filter(models.Student.id == student_id).first()
     if not record:
         raise HTTPException(status_code=404, detail="Not Found") 
     record.id = str(record.id)
     return schemas.StudentWithSubjects.from_orm(record)
+
 
 def create_student(db: Session, student: schemas.StudentInsert) -> models.Student:
     from .subjects import get_subject_by_id
@@ -40,11 +43,10 @@ def create_student(db: Session, student: schemas.StudentInsert) -> models.Studen
     subjects = student_dict.pop("subjects")
     note = student_dict.pop("note")
     db_student = models.Student(**student_dict)
-
     db.add(db_student)
     db.commit()
     db.refresh(db_student)
-    
+
     relation_list = list()
     if subjects :
         for subject in  subjects: 
@@ -60,11 +62,11 @@ def create_student(db: Session, student: schemas.StudentInsert) -> models.Studen
     db_student.id = str(db_student.id)
     return db_student
 
+
 def update_student(student_id: str, db: Session, student: schemas.StudentInsert) -> models.Student:
     from .subjects import get_subject_by_id
 
     db_student = get_student_by_id(student_id=student_id, db=db) 
-
     subjects = student.subjects 
     if subjects :
         subjects = subjects.copy()

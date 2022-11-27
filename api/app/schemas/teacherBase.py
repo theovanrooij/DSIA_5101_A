@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field
 from uuid import uuid4
 from typing_extensions import Annotated
 
+
 class TeacherBase(BaseModel):
     id: Annotated[str, Field(default_factory=lambda: uuid4().hex)]
     family_name: str

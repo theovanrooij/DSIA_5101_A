@@ -14,6 +14,7 @@ def get_all_teachers(db: Session, skip: int = 0, limit: int = 200) -> List[schem
         return_list.append(schemas.TeacherWithSubjects.from_orm(record))
     return return_list
 
+
 def get_teacher_by_id(teacher_id: str, db: Session) -> models.Teacher:
     record = db.query(models.Teacher).filter(models.Teacher.id == teacher_id).first()
     if not record:
@@ -21,12 +22,14 @@ def get_teacher_by_id(teacher_id: str, db: Session) -> models.Teacher:
     record.id = str(record.id)
     return record
 
+
 def get_teacher_subjects_by_id(teacher_id: str, db: Session) -> schemas.TeacherWithSubjects:
     record = db.query(models.Teacher).options(joinedload(models.Teacher.subjects)).filter(models.Teacher.id == teacher_id).first()
     if not record:
         raise HTTPException(status_code=404, detail="Not Found") 
     record.id = str(record.id)
     return schemas.TeacherWithSubjects.from_orm(record)
+
 
 def create_teacher(db: Session, teacher: schemas.TeacherWithSubjects) -> models.Teacher:
     from .subjects import get_subject_by_id
@@ -48,6 +51,7 @@ def create_teacher(db: Session, teacher: schemas.TeacherWithSubjects) -> models.
     db_teacher.id = str(db_teacher.id)
     return db_teacher
 
+
 def update_teacher(teacher_id: str, db: Session, teacher: schemas.TeacherWithSubjects) -> models.Teacher:
     from .subjects import get_subject_by_id
 
@@ -57,7 +61,6 @@ def update_teacher(teacher_id: str, db: Session, teacher: schemas.TeacherWithSub
     if subjects :
         subjects = subjects.copy()
         teacher.subjects.clear()
-
 
     for var, value in vars(teacher).items():
         setattr(db_teacher, var, value) if value else None

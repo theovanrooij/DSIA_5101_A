@@ -2,6 +2,7 @@ from flask_wtf import Form
 from wtforms import StringField,DateField,SelectMultipleField
 from wtforms.validators import DataRequired
 
+
 class studentForm(Form):
     family_name = StringField('Nom', validators=[DataRequired()])
     first_name = StringField('Prénom', validators=[DataRequired()])
@@ -11,12 +12,14 @@ class studentForm(Form):
     subjects = SelectMultipleField('Matières',choices=[])
 
 
+
 class teacherForm(Form):
     family_name = StringField('Nom', validators=[DataRequired()])
     first_name = StringField('Prénom', validators=[DataRequired()])
     birth_date = DateField('Date de naissance', validators=[DataRequired()])
     subjects = SelectMultipleField('Matières',choices=[])
     subjects = SelectMultipleField('Matières',choices=[])
+
 
 class subjectForm(Form):
     code_subject = StringField('Code de la matière/unité', validators=[DataRequired()])
