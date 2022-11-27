@@ -68,7 +68,6 @@ def update_teacher(teacher_id: str, db: Session, teacher: schemas.TeacherWithSub
             db_teacher.subjects.append(get_subject_by_id(subject,db))
     
     db_teacher.updated_at = datetime.now()
-    print(db_teacher)
     db.add(db_teacher)
     db.commit()
     db.refresh(db_teacher)

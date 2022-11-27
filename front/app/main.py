@@ -36,6 +36,11 @@ def addStudent():
     
     if all_subjects.status_code == 200 : 
         all_subjects_data = all_subjects.json()
+        subjectChoices = []
+        for subject in all_subjects_data:
+            subjectChoices.append((subject["id"],
+            subject["code_subject"]+"-"+subject["name_subject"]))
+        form.subjects.choices = subjectChoices
     else : 
         all_subjects_data = []
     return render_template("add-student.html",form=form, all_subjects=all_subjects_data)
@@ -94,13 +99,32 @@ def updateStudent(studentID):
         abort(response.status_code)
     student = response.json()
     all_subjects  = requests.get(app.config['API_URL']+"/subjects")
+    studentObj = student.copy()
+    studentSubjectID = []
+    if studentObj["subjects"]:
+        studentSubjectID = [subject["id"] for subject in studentObj["subjects"] ]
+  
     if all_subjects.status_code == 200 : 
         all_subjects_data = all_subjects.json()
+        subjectChoices = []
+        subjectsID = []
+        for subject in all_subjects_data:
+            subjectChoices.append((subject["id"],
+            subject["code_subject"]+"-"+subject["name_subject"]))
+            if subject["id"] in studentSubjectID :
+                subjectsID.append(subject["id"])
+        studentObj["subjects"] = subjectsID
+        
     else : 
         all_subjects_data = []
-
-    form = studentForm(obj=student)
-    return render_template("edit-student.html",form=form,student=student,all_subjects=all_subjects_data)
+        subjectChoices = []
+        subjectsID=()
+    form = studentForm(obj=studentObj)
+    form.subjects.choices = subjectChoices
+    form.subjects.default = subjectsID
+    form.process()
+    
+    return render_template("edit-student.html",form=form,obj=studentObj,student=student,all_subjects=all_subjects_data)
 
 
 @app.route('/edit-student-api/<studentID>', methods= ['POST','GET'])
@@ -150,6 +174,11 @@ def addTeacher():
 
     if all_subjects.status_code == 200 : 
         all_subjects_data = all_subjects.json()
+        subjectChoices = []
+        for subject in all_subjects_data:
+            subjectChoices.append((subject["id"],
+            subject["code_subject"]+"-"+subject["name_subject"]))
+        form.subjects.choices = subjectChoices
     else : 
         all_subjects_data = []
     return render_template("add-teacher.html",form=form, all_subjects=all_subjects_data)
@@ -196,13 +225,38 @@ def deleteTeacherApi(teacherID):
 
 @app.route('/edit-teacher/<teacherID>', methods= ['GET'])
 def updateTeacher(teacherID):
-    response  = requests.get(app.config['API_URL']+"/teachers/"+teacherID)
+    response  = requests.get(app.config['API_URL']+"/teachers/subjects/"+teacherID)
     if response.status_code != 200 :
         abort(response.status_code)
     teacher = response.json()
     all_subjects  = requests.get(app.config['API_URL']+"/subjects")
-    form = teacherForm(obj=teacher)
-    return render_template("edit-teacher.html",form=form,teacher=teacher,all_subjects=all_subjects.json())
+
+    teacherObj = teacher.copy()
+    teacherSubjectID = []
+    if teacherObj["subjects"]:
+        teacherSubjectID = [subject["id"] for subject in teacherObj["subjects"] ]
+  
+
+    if all_subjects.status_code == 200 : 
+        all_subjects_data = all_subjects.json()
+        subjectChoices = []
+        subjectsID = []
+        for subject in all_subjects_data:
+            subjectChoices.append((subject["id"],
+            subject["code_subject"]+"-"+subject["name_subject"]))
+            if subject["id"] in teacherSubjectID :
+                subjectsID.append(subject["id"])
+        teacherObj["subjects"] = subjectsID
+        
+    else : 
+        all_subjects_data = []
+        subjectChoices = []
+        subjectsID=()
+    form = teacherForm(obj=teacherObj)
+    form.subjects.choices = subjectChoices
+    form.subjects.default = subjectsID
+    form.process()
+    return render_template("edit-teacher.html",form=form,obj=teacherObj,teacher=teacher,all_subjects=all_subjects_data)
 
 
 @app.route('/edit-teacher-api/<teacherID>', methods= ['POST','GET'])

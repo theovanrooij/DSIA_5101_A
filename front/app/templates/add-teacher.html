@@ -16,15 +16,6 @@
   
     {% endfor %}
 
-
-    <select multiple id="mymultiselect" name="subjects">       
-      {% for subject in all_subjects %}  
-      <option value='{{subject.id}}' name='{{subject.name_subject}}'>{{subject.name_subject}}</option>    
-      {{subject.id}}   
-      {% endfor %}
-    </select>
-
-
     <div class="md:flex md:items-center">
         <div class="md:w-1/3"></div>
         <div class="md:w-2/3">
