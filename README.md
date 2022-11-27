@@ -81,44 +81,162 @@ Nous pouvons aussi modifier directement la matière/unité en cliquant sur le bo
 
 ## student
 
-create_student : permet de créer un élève en utilisant les réponses soumises au form student pour avoir les données nécessaires à sa création. Les matières que nous pouvons assigner à l'élève sont recherchées à partir de celles stockées dans les matières de la database. Ajoute le nouvel élève à la database. Si l'élève est déjà repertorié dans la database, nous retournons une erreur 409.
+### POST, /subjects : Permet de créer un élève en utilisant les réponses soumises au form student pour avoir les données nécessaires à sa création. Les matières que nous pouvons assigner à l'élève sont recherchées à partir de celles stockées dans les matières de la database. Ajoute le nouvel élève à la database. Si l'élève est déjà repertorié dans la database, nous retournons une erreur 409.
 
-get_all_students : permet de récuperer tous les élèves présents dans la database.
+Exemple de requête : 
 
-get_student_by_id : permet de récuperer un élève grâce à son ID unique. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
+```json
+{
+ "family_name" : "Nom_1",
+ "first_name" : "Prenom_1",
+ "birth_date":datetime,
+ "academic_level":"E5",
+ "class_student":"DSIA",
+ "subjects": [ 
+    [ "id_subject_1",15],
+    [ "id_subject_2",-1],
+    ...
+ ]
+}
+```
+Les subjects sont optionnels.
 
-update_student_by_id : permet de modifier un élève grâce à son ID unique et en ouvrant le form conçu pour récuperer les informations d'un élève.
+La note vaut -1 si aucune n'est assignée.
 
-delete_student_by_id : permet de supprimer un élève grâce à son ID unique.
+### GET, /subjects : permet de récuperer tous les élèves présents dans la database.
 
-delete_all_students : permet de supprimer tous les élèves de la database.
+### GET, /subjects/<subjectID> : permet de récuperer un élève grâce à son ID unique, précisé dans l'URL. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
+
+### PUT, /subjects/<subjectID> : permet de modifier un élève grâce à son ID unique, précisé dans l'URL, et en ouvrant le form conçu pour récuperer les informations d'un élève.
+
+Exemple de requête : 
+
+```json
+{
+ "id" : "id_1,
+ "family_name" : "Nom_1",
+ "first_name" : "Prenom_1",
+ "birth_date":datetime,
+ "academic_level":"E5",
+ "class_student":"DSIA",
+ "subjects": [ 
+    [ "id_subject_1",15],
+    [ "id_subject_2",-1],
+    ...
+ ]
+}
+```
+Les subjects sont optionnels.
+
+La note vaut -1 si aucune n'est assignée.
+
+### DELETE, /subjects/<subjectID> : permet de supprimer un élève grâce à son ID unique, précisé dans l'URL.
+
+### DELETE, /subjects : permet de supprimer tous les élèves de la database.
 
 
 ## teacher
 
-create_teacher : permet de créer un professeur en utilisant les réponses soumises au form teacher pour avoir les données nécessaires à sa création. Les matières que nous pouvons assigner au professeur sont recherchées à partir de celles stockées dans les matières de la database. Ajoute le nouvel professeur à la database. Si le professeur est déjà repertorié dans la database, nous retournons une erreur 409.
+### POST, /teachers : permet de créer un professeur en utilisant les réponses soumises au form teacher pour avoir les données nécessaires à sa création. Les matières que nous pouvons assigner au professeur sont recherchées à partir de celles stockées dans les matières de la database. Ajoute le nouvel professeur à la database. Si le professeur est déjà repertorié dans la database, nous retournons une erreur 409.
 
-get_all_teachers : permet de récuperer tous les professeurs présents dans la database.
+Exemple de requête : 
 
-get_teacher_by_id : permet de récuperer un professeur grâce à son ID unique. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
+```json
+{
+ "family_name" : "Nom_1",
+ "first_name" : "Prenom_1",
+ "birth_date": "01-01-2000",
+ "subjects": [ 
+    "id_subject_1",
+    "id_subject_2",
+    ...
+ ]
+}
+```
+Les subjects sont optionnels.
 
-update_teacher_by_id : permet de modifier un professeur grâce à son ID unique et en ouvrant le form conçu pour récuperer les informations d'un professeur.
+### GET, /teachers : permet de récuperer tous les professeurs présents dans la database.
 
-delete_teacher_by_id : permet de supprimer un professeur grâce à son ID unique.
+### GET, /teachers/<teacherID> : permet de récuperer un professeur grâce à son ID unique, précisé dans l'URL. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
 
-delete_all_teachers : permet de supprimer tous les professeurs de la database.
+### PUT, /teachers/<teacherID> : permet de modifier un professeur grâce à son ID unique, précisé dans l'URL, et en ouvrant le form conçu pour récuperer les informations d'un professeur.
+
+Exemple de requête : 
+
+```json
+{
+"id" : "id_1",
+ "family_name" : "Nom_1",
+ "first_name" : "Prenom_1",
+ "birth_date": "01-01-2000",
+ "subjects": [ 
+    "id_subject_1",
+    "id_subject_2",
+    ...
+ ]
+}
+```
+Les subjects sont optionnels.
+
+### DELETE, /teachers/<teacherID> : permet de supprimer un professeur grâce à son ID unique, précisé dans l'URL.
+
+### DELETE, /teachers : permet de supprimer tous les professeurs de la database.
 
 
 ## subject
 
-create_subject : permet de créer une matière en utilisant les réponses soumises au form subject pour avoir les données nécessaires à sa création. Si la matière est déjà repertoriée dans la database, nous retournons une erreur 409.
+### POST, /subjects : permet de créer une matière en utilisant les réponses soumises au form subject pour avoir les données nécessaires à sa création. Si la matière est déjà repertoriée dans la database, nous retournons une erreur 409.
 
-get_all_subjects : permet de récuperer toutes les matières présents dans la database.
+Exemple de requête : 
 
-get_subject_by_id : permet de récuperer une matière grâce à son ID unique. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
+```json
+{
+ "code_subject" : "code_1",
+ "name_subject" : "name_1",
+ "birth_date": "01-01-2000",
+ "students": [ 
+    [ "id_student_1",15],
+    [ "id_student_2",-1],
+    ...
+ ],
+ "teachers": [ 
+    "id_teachers_1",
+    "id_teachers_2",
+    ...
+ ]
+}
+```
+Les students et teachers sont optionnels.
 
-update_subject : permet de modifier un élève grâce à son ID unique et en ouvrant le form conçu pour récuperer les informations d'un élève.
 
-delete_subject : permet de supprimer un élève grâce à son ID unique.
+### GET, /subjects : permet de récuperer toutes les matières présents dans la database.
 
-delete_all_subjects : permet de supprimer toutes les matières de la database.
+### GET, /subjects/<subjectID> : permet de récuperer une matière grâce à son ID unique, précisé dans l'URL. Si l'ID donné n'est pas repertorié dans la database, nous retournons une erreur 404.
+
+### PUT, /subjects/<subjectID> : permet de modifier un élève grâce à son ID unique, précisé dans l'URL, et en ouvrant le form conçu pour récuperer les informations d'un élève.
+
+Exemple de requête : 
+
+```json
+{
+"id" : "id_1",
+ "code_subject" : "code_1",
+ "name_subject" : "name_1",
+ "birth_date": "01-01-2000",
+ "students": [ 
+    [ "id_student_1",15],
+    [ "id_student_2",-1],
+    ...
+ ],
+ "teachers": [ 
+    "id_teachers_1",
+    "id_teachers_2",
+    ...
+ ]
+}
+```
+Les students et teachers sont optionnels.
+
+### DELETE, /subjects/<subjectID> : permet de supprimer un élève grâce à son ID unique, précisé dans l'URL.
+
+### DELETE, /subjects : permet de supprimer toutes les matières de la database.
