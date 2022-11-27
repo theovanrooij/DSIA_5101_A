@@ -12,8 +12,8 @@ def root():
     return render_template("accueil.html",text=requests.get(app.config['API_URL']).text)
 
 
-
 ## Students 
+
 
 @app.route('/students')
 def students():
@@ -40,6 +40,7 @@ def addStudent():
         all_subjects_data = []
     return render_template("add-student.html",form=form, all_subjects=all_subjects_data)
 
+
 @app.route('/add-student-api', methods= ['POST'])
 def addStudentApi():
     formData = request.form.to_dict(flat=False)
@@ -58,6 +59,7 @@ def addStudentApi():
         return redirect("/")
     return redirect("/students")
 
+
 @app.route('/student/remove-subject/<studentID>/<subjectID>', methods= ['GET'])
 def removeStudentSubject(studentID,subjectID):
     student =  requests.get(app.config['API_URL']+"/students/"+studentID)
@@ -71,7 +73,6 @@ def removeStudentSubject(studentID,subjectID):
         if not subject.get("id") == subjectID :
             student["subjects"].append([subject["id"],subject["note"] if subject["note"] else -1])
     response  = requests.put(app.config['API_URL']+"/students/"+studentID,json=student)
-
 
     if response.status_code != 200 :
         abort(response.status_code)
@@ -122,7 +123,6 @@ def editStudentApi(studentID):
     if response.status_code != 200 :
         abort(response.status_code)
     return redirect("/students")
-
 
 
 ## Teachers 
@@ -217,7 +217,6 @@ def editTeacherApi(teacherID):
     if response.status_code != 200 :
         abort(response.status_code)
     return redirect("/teachers")
-
 
 
 ## Matières/Unités
@@ -374,9 +373,11 @@ def editNoteStudent(subjectID,studentID,noteValue):
 def page_not_found(e):
     return render_template("404.html")
 
+
 @app.errorhandler(409)
 def ressource_exist(e):
     return render_template("409.html")
+
 
 @app.errorhandler(500)
 def internal_server_error(e):

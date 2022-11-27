@@ -10,16 +10,13 @@ router = APIRouter()
 def read_root():
     return {"Hello": "World"}
 
-
 @router.get("/api")
 def read_hello():
     return {"Hello": "Api"}
 
-
 @router.get("/health")
 def read_root():
     return {"message": "Api is running fine!"}
-
 
 @router.get("/api/headers")
 def read_hello(request: Request, x_userinfo: Optional[str] = Header(None, convert_underscores=True)):

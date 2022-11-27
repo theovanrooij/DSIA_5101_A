@@ -3,7 +3,7 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship,backref
 from .database import BaseSQL
 from sqlalchemy.ext.associationproxy import association_proxy
-from sqlalchemy.orm import relationship
+
 
 class StudentSubject(BaseSQL):
     __tablename__ ='studentsubject'

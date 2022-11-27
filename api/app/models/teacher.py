@@ -3,7 +3,6 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship,backref
 from .database import BaseSQL
 
-from sqlalchemy.orm import relationship
 
 TeacherSubjectRelation = Table('teachersubjectrelation', BaseSQL.metadata,
     Column('teacher_id', UUID(as_uuid=True), ForeignKey('teacher.id',onupdate="CASCADE",ondelete="CASCADE")),

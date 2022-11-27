@@ -14,6 +14,7 @@ app.include_router(routers.StudentRouter)
 app.include_router(routers.TeacherRouter)
 app.include_router(routers.SubjectRouter)
 
+
 @app.on_event("startup")
 async def startup_event():
     models.BaseSQL.metadata.create_all(bind=models.engine)
@@ -23,13 +24,16 @@ async def startup_event():
         print("failed to populate")
         pass
     
+
 @app.get("/")
 def read_root():
     return {"Hello": "World API"}
 
+
 @app.get("/date")
 def read_date():
     return {"Date": datetime.datetime.today()}
+
 
 @app.get("/populate")
 def populate():
@@ -68,7 +72,6 @@ def populate():
     studentSubjectRelation4 = models.StudentSubject(student_id=student4.id,subject_id=subject1.id,note=10)
     studentSubjectRelation5 = models.StudentSubject(student_id=student1.id,subject_id=subject2.id,note=None)
 
-    # return [student1,student2,student3,student4]
     db = next(models.get_db())
     db.add_all([student1,student2,student3,student4,teacher1,teacher2,subject1,subject2,subject3,studentSubjectRelation1,
                     studentSubjectRelation2,studentSubjectRelation3,studentSubjectRelation4,studentSubjectRelation5])
