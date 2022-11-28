@@ -88,8 +88,8 @@ def removeStudentSubject(studentID,subjectID):
 @app.route('/delete-student/<studentID>', methods= ['GET'])
 def deleteStudentApi(studentID):
     response  = requests.delete(app.config['API_URL']+"/students/"+studentID)
-    if response.status_code != 200 :
-        abort(response.status_code)
+    # if response.status_code != 200 :
+    #     abort(response.status_code)
     return redirect("/students")
 
 
@@ -218,8 +218,8 @@ def removeTeacherSubject(teacherID,subjectID):
 @app.route('/delete-teacher/<teacherID>', methods= ['GET'])
 def deleteTeacherApi(teacherID):
     response  = requests.delete(app.config['API_URL']+"/teachers/"+teacherID)
-    if response.status_code != 200 :
-        abort(response.status_code)
+    # if response.status_code != 200 :
+    #     abort(response.status_code)
     return redirect("/teachers")
 
 
@@ -310,8 +310,8 @@ def addSubjectApi():
 @app.route('/delete-subject/<subjectID>', methods= ['GET'])
 def deleteSubjectApi(subjectID):
     response  = requests.delete(app.config['API_URL']+"/subjects/"+subjectID)
-    if response.status_code != 200 :
-        abort(response.status_code)
+    # if response.status_code != 200 :
+    #     abort(response.status_code)
     return redirect("/subjects")
 
 
